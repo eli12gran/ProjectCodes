@@ -1,0 +1,992 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Pendulum With Drag &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'PendulumNew';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Notebooks with MyST Markdown" href="markdown-notebooks.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Welcome to your Jupyter Book
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="markdown.html">Markdown Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks.html">Content with notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="markdown-notebooks.html">Notebooks with MyST Markdown</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"><strong>Pendulum With Drag</strong></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FPendulumNew.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/PendulumNew.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Pendulum With Drag</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-pendulum-with-euler"><strong>Simple Pendulum with Euler</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-pendulum-with-euler-cromer"><strong>Simple Pendulum with Euler-Cromer</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><strong>Pendulum with Drag</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analytical-solution"><strong>Analytical Solution</strong></a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="pendulum-with-drag">
+<h1><strong>Pendulum With Drag</strong><a class="headerlink" href="#pendulum-with-drag" title="Permalink to this heading">#</a></h1>
+<p>In a simple pendulum we have a periodic movement, that is, a movement that goes and returns. If we drew the diagram force of the movement, we would have something like this:</p>
+<p><img alt="" src="https://i.imgur.com/EhtlaWJ.jpg" /></p>
+<p>When we talk about a simple pendulum, we mean that the angle <span class="math notranslate nohighlight">\(\theta\)</span> is never greater than <span class="math notranslate nohighlight">\(sin(15°)\)</span>, so this implies that <span class="math notranslate nohighlight">\(sin(\theta) ≈ \theta\)</span> then we won´t have a chaotic movement, as we will see a case later. If we wrote Newton’s equations for this movement we would have:</p>
+<div class="math notranslate nohighlight">
+\[\sum F_{x} = -Tsen(\theta) = m \frac {d^2x}{dt^2}\]</div>
+<div class="math notranslate nohighlight">
+\[\sum F_{y} = Tcos(\theta) - mg = m \frac {d^2y}{dt^2}\]</div>
+<p>As we see here, we have two equations to solve a system with three unknowns variables. This system becomes very ineffective and complex to solve, so the easiest solution is to <strong>take this cartesian system to polar coordinates</strong>. To take a good look at how the movement would be described in polar coordinates, let’s look at the following image:</p>
+<p><img alt="" src="https://i.imgur.com/0vUtlHQ.jpg" /></p>
+<p>If we were to write Newton’s equations for this “new system”, we would have:</p>
+<div class="math notranslate nohighlight">
+\[\sum F_{r} = T - mgcos(\theta) = m\frac {d^2 r}{dt^2}\]</div>
+<div class="math notranslate nohighlight">
+\[sum F_{\theta} = -mg sin(\theta) = m \frac {dv_{\theta}}{dt}\]</div>
+<p>If we look at the image we can see that <span class="math notranslate nohighlight">\(r\)</span> is the length of the string, so its derivative is a constant so it is <span class="math notranslate nohighlight">\(0\)</span>. In addition, the equation of the sum of forces in <span class="math notranslate nohighlight">\(\theta\)</span> can be described in a different way since the speed in this movement would be given by: <span class="math notranslate nohighlight">\(r \frac {d\theta}{dt}\)</span> then the equations are described as follows:</p>
+<div class="math notranslate nohighlight">
+\[T-mgcos(\theta) = 0\]</div>
+<div class="math notranslate nohighlight">
+\[T = mgcos(\theta)\]</div>
+<div class="math notranslate nohighlight">
+\[\frac {d^2\theta}{dt^2} = \frac {-g}{l} sen(\theta)\]</div>
+<p>And these would be the equations that we must solve numerically.</p>
+<hr class="docutils" />
+<p>In this notebook, the pendulum equation will be solved in four cases:</p>
+<ol class="arabic simple">
+<li><p>Simple pendulum with Euler’s method (this is  for <span class="math notranslate nohighlight">\(\theta \leq 15°\)</span>)</p></li>
+<li><p>Simple pendulum with the Euler-Cromer method (that is, for <span class="math notranslate nohighlight">\(\theta \leq 15°\)</span>)</p></li>
+<li><p>Friction Pendulum (for large <span class="math notranslate nohighlight">\(\theta\)</span> values)</p></li>
+<li><p>Analytical solution for small angles with drag</p></li>
+</ol>
+<p>It is important to let know the reader that we´re using Euler´s method just for show that this method <strong>DOES NOT</strong> work for the pendulum solutions. That´s why the rest of the code is calculated with Euler-Cromer´s method.</p>
+<section id="simple-pendulum-with-euler">
+<h2><strong>Simple Pendulum with Euler</strong><a class="headerlink" href="#simple-pendulum-with-euler" title="Permalink to this heading">#</a></h2>
+<p>For this case:</p>
+<div class="math notranslate nohighlight">
+\[\frac {d^2\theta}{dt^2} = \frac {-g}{l} \theta\]</div>
+<p>Numerically:</p>
+<div class="math notranslate nohighlight">
+\[\omega_{i+1} = \omega_{i} - Δt(\frac {g}{l} \theta_{i})\]</div>
+<div class="math notranslate nohighlight">
+\[\theta_{i+1} = \theta_{i} + \omega_{i} Δt\]</div>
+<p>This is:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="mf">9.8</span><span class="p">;</span> <span class="n">theta</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">];</span> <span class="n">w</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="n">l</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">time</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+  <span class="n">w</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">w</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">g</span><span class="o">/</span><span class="n">l</span> <span class="o">*</span> <span class="n">theta</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">time</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+  <span class="n">theta</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">theta</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">w</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">time</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">theta</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Pendulum With No Drag Euler Method&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;theta&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;theta&#39;)
+</pre></div>
+</div>
+<img alt="_images/01fc5d1c5fb57e7cad890ef4ea70e9fa548308bcac4b8002502b24a5d32c176f.png" src="_images/01fc5d1c5fb57e7cad890ef4ea70e9fa548308bcac4b8002502b24a5d32c176f.png" />
+</div>
+</div>
+<p>As we can see in the image, the method is unstable.</p>
+</section>
+<section id="simple-pendulum-with-euler-cromer">
+<h2><strong>Simple Pendulum with Euler-Cromer</strong><a class="headerlink" href="#simple-pendulum-with-euler-cromer" title="Permalink to this heading">#</a></h2>
+<p>We have the same case above but numerically it is as follows:</p>
+<div class="math notranslate nohighlight">
+\[\omega_{i+1} = \omega_{i} - Δt(\frac {g}{l} \theta)\]</div>
+<div class="math notranslate nohighlight">
+\[\theta_{i+1} = \theta_{i} + Δt (\omega_{i+1})\]</div>
+<p>The code is:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="mf">9.8</span><span class="p">;</span> <span class="n">thetacromer</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.2</span><span class="p">];</span> <span class="n">wcromer</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="n">l</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">time</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+  <span class="n">wcromer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wcromer</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">g</span><span class="o">/</span><span class="n">l</span> <span class="o">*</span> <span class="n">thetacromer</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">time</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+  <span class="n">thetacromer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">thetacromer</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">time</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">wcromer</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">thetacromer</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;orange&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Pendulum With No Drag Euler-Cromer&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;theta&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;theta&#39;)
+</pre></div>
+</div>
+<img alt="_images/74631ae3af273444439512926cb6bc27521a212a1e3022e5c953f3db197350d4.png" src="_images/74631ae3af273444439512926cb6bc27521a212a1e3022e5c953f3db197350d4.png" />
+</div>
+</div>
+</section>
+<section id="id1">
+<h2><strong>Pendulum with Drag</strong><a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<p>For this case we would have:</p>
+<div class="math notranslate nohighlight">
+\[\frac {d^2\theta}{dt^2} = -\frac {g}{l} sin(\theta)- \frac {b}{m} \frac {d\theta}{dt}\]</div>
+<p>Where <span class="math notranslate nohighlight">\(\frac {b}{m}\)</span> is the coefficient <span class="math notranslate nohighlight">\(\gamma\)</span> used in the previous codes. Since this equation is non-linear, what we will do is “take advantage” of the definition of angular frequency <span class="math notranslate nohighlight">\(\omega\)</span> which is defined as the change of the angle with respect to time. So having it this way we can say that <span class="math notranslate nohighlight">\(\omega = \frac {d\theta}{dt}\)</span>. So our equation would be in terms of <span class="math notranslate nohighlight">\(\omega\)</span> and would look like this:</p>
+<div class="math notranslate nohighlight">
+\[\omega´ = -\frac {g}{l} sin(\theta)- \frac {b}{m} \omega\]</div>
+<p>Now we can use Euler-Cromer again to solve it, and the numerical equations are as follows:</p>
+<div class="math notranslate nohighlight">
+\[\omega_{i+1} = \omega_{i} + Δt(\frac {-g}{l} sin(\theta_{i}) - \gamma \omega_{i})\]</div>
+<div class="math notranslate nohighlight">
+\[\theta_{i+1} = \omega_{i+1} + Δt(\theta_{i})\]</div>
+<hr class="docutils" />
+<p>Since the idea is to observe several angles in a graph, we will create a function for this. It will receive as parameters a maximum time, a list of angles and the coefficient of viscosity, the latter is which is in the hands of the user to change. The dynamic viscosity of the air is quite low (<span class="math notranslate nohighlight">\(0.018\)</span>), so it is recommended to set a slightly larger number to see how the movement stops.</p>
+<p>The code is as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">frictionPendulum</span><span class="p">(</span><span class="n">tiempo</span><span class="p">,</span> <span class="n">angulos</span><span class="p">,</span> <span class="n">dynamic_viscosity</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="mf">9.8</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
+  <span class="n">miu</span> <span class="o">=</span> <span class="n">dynamic_viscosity</span><span class="p">;</span> <span class="n">m</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span> <span class="n">g</span> <span class="o">=</span> <span class="mf">9.8</span><span class="p">;</span> <span class="n">R</span><span class="o">=</span><span class="mi">5</span><span class="p">;</span> <span class="c1">#Constantes</span>
+  <span class="n">b</span> <span class="o">=</span> <span class="mi">6</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">R</span><span class="o">*</span><span class="n">miu</span>
+  <span class="n">gamma</span> <span class="o">=</span> <span class="n">b</span><span class="o">/</span><span class="n">m</span>
+  <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">tiempo</span><span class="o">+</span><span class="n">dt</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
+  <span class="n">w2</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="k">for</span> <span class="n">theta_</span> <span class="ow">in</span> <span class="n">angulos</span><span class="p">:</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="p">[</span><span class="n">theta_</span><span class="p">,</span> <span class="n">theta_</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">tiempo</span><span class="o">/</span><span class="n">dt</span><span class="p">)):</span>
+        <span class="n">w2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">w2</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="n">g</span><span class="o">/</span><span class="n">l</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">-</span> <span class="n">gamma</span> <span class="o">*</span> <span class="n">w2</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="n">theta</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">theta</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">w2</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;angulo=</span><span class="si">{</span><span class="n">theta_</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;best&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="s2">&quot;--&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;theta&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Pendulum with Drag Euler Cromer&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+  <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Calling our finction and giving it some angles converted into radians:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">frictionPendulum</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="p">[</span><span class="mi">90</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">180</span><span class="p">,</span> <span class="mi">45</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">180</span><span class="p">,</span> <span class="mi">50</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">180</span><span class="p">,</span> <span class="mi">80</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">180</span><span class="p">],</span> <span class="mf">0.097</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/8e41bbecd0368c420f0ff360830eb6c1ed861915636345a72ba16c07d1d1d140.png" src="_images/8e41bbecd0368c420f0ff360830eb6c1ed861915636345a72ba16c07d1d1d140.png" />
+</div>
+</div>
+</section>
+<section id="analytical-solution">
+<h2><strong>Analytical Solution</strong><a class="headerlink" href="#analytical-solution" title="Permalink to this heading">#</a></h2>
+<p>Now, with the purpose  of comparing the exact and analytical solutions, we solved the differential equation for <strong>small angles</strong> analitically which gave as a result:</p>
+<div class="math notranslate nohighlight">
+\[\theta(t)= \theta_{0} e^{-\gamma t/2} sin(\omega t + \phi)\]</div>
+<p>It is important to let clear that this is a possible solution when:</p>
+<div class="math notranslate nohighlight">
+\[\omega = \sqrt{\frac {\gamma^2}{4} - \frac {g}{l}}\]</div>
+<p>For large angles, the equation cannot be solved analytically since it is no longer linear (<span class="math notranslate nohighlight">\(sin(\theta)\)</span> appears) in the second derivative of <span class="math notranslate nohighlight">\(\theta\)</span>. So, the solution of this analytic remains:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gamma</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">phi</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">theta</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="n">amp</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="n">phi</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">g</span> <span class="o">=</span><span class="mf">9.8</span><span class="p">;</span> <span class="n">l</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span> <span class="nb">abs</span><span class="p">((</span><span class="n">gamma</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">g</span><span class="o">/</span><span class="n">l</span><span class="p">)))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">time</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+  <span class="n">theta</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">amp</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">gamma</span><span class="o">*</span><span class="n">time</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">w</span><span class="o">*</span><span class="n">time</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">phi</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">theta</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Exact Solution for Small Theta Values With Drag&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="s2">&quot;--&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;theta&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 0, &#39;time&#39;)
+</pre></div>
+</div>
+<img alt="_images/4f66f4d7eac62a576a33f9e434000807abedce6a1da3b8ad7141031ce8075215.png" src="_images/4f66f4d7eac62a576a33f9e434000807abedce6a1da3b8ad7141031ce8075215.png" />
+</div>
+</div>
+<p>With this image we can verify that the numerical code made in the previous step with the Euler-Cromer method gives the results correctly.</p>
+<hr class="docutils" />
+<p>Now, let´s see something fun!!</p>
+<p>Let´s watch an 3D animation on how a <strong>Pendulum with Drag and Large Angles</strong> works!</p>
+<p>The animation was made with GlowScript that uses VPython for making 3D animations</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%html</span>
+
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;glowscript&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;glowscript&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">meta</span> <span class="na">http-equiv</span><span class="o">=</span><span class="s">&quot;Content-Type&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;text/html; charset=utf-8&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">link</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;https://www.glowscript.org/css/redmond/2.1/jquery-ui.custom.css&quot;</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">link</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;https://www.glowscript.org/css/ide.css&quot;</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://www.glowscript.org/lib/jquery/2.1/jquery.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://www.glowscript.org/lib/jquery/2.1/jquery-ui.custom.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://www.glowscript.org/package/glow.3.2.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://www.glowscript.org/package/RSrun.3.2.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span><span class="c">&lt;!--</span><span class="c1">//--&gt;&lt;![CDATA[//&gt;&lt;!--</span>
+
+<span class="c1">// START JAVASCRIPT</span>
+<span class="p">;(</span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{;</span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">ρσ_modules</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{};</span>
+<span class="nx">ρσ_modules</span><span class="p">.</span><span class="nx">pythonize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{};</span>
+
+<span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+<span class="w">    </span><span class="kd">function</span><span class="w"> </span><span class="nx">strings</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">string_funcs</span><span class="p">,</span><span class="w"> </span><span class="nx">exclude</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">string_funcs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">set</span><span class="p">(</span><span class="s2">&quot;capitalize strip lstrip rstrip islower isupper isspace lower upper swapcase center count endswith startswith find rfind index rindex format join ljust rjust partition rpartition replace split rsplit splitlines zfill&quot;</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">));</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">exclude</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+<span class="w">                </span><span class="kd">var</span><span class="w"> </span><span class="nx">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">ρσ_set</span><span class="p">();</span>
+<span class="w">                </span><span class="nx">s</span><span class="p">.</span><span class="nx">jsset</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s2">&quot;split&quot;</span><span class="p">);</span>
+<span class="w">                </span><span class="nx">s</span><span class="p">.</span><span class="nx">jsset</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s2">&quot;replace&quot;</span><span class="p">);</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="nx">s</span><span class="p">;</span>
+<span class="w">            </span><span class="p">})();</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">arguments</span><span class="p">[</span><span class="mf">0</span><span class="p">])</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">exclude</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">arguments</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">exclude</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">exclude</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">string_funcs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">string_funcs</span><span class="p">.</span><span class="nx">difference</span><span class="p">(</span><span class="nx">set</span><span class="p">(</span><span class="nx">exclude</span><span class="p">));</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">ρσ_Iter0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">string_funcs</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">ρσ_Iter0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="ow">typeof</span><span class="w"> </span><span class="nx">ρσ_Iter0</span><span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">&quot;function&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="p">(</span><span class="nx">ρσ_Iter0</span><span class="w"> </span><span class="ow">instanceof</span><span class="w"> </span><span class="nb">Map</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="nx">ρσ_Iter0</span><span class="p">.</span><span class="nx">keys</span><span class="p">()</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nx">ρσ_Iter0</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">ρσ_Iter0</span><span class="p">));</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">var</span><span class="w"> </span><span class="nx">ρσ_Index0</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nx">ρσ_Iter0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">ρσ_Index0</span><span class="p">;</span>
+<span class="w">            </span><span class="p">(</span><span class="nx">ρσ_expr_temp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">String</span><span class="p">.</span><span class="nx">prototype</span><span class="p">)[(</span><span class="ow">typeof</span><span class="w"> </span><span class="nx">name</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">&quot;number&quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">name</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="nx">ρσ_expr_temp</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">name</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nx">name</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">ρσ_expr_temp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">ρσ_str</span><span class="p">.</span><span class="nx">prototype</span><span class="p">)[(</span><span class="ow">typeof</span><span class="w"> </span><span class="nx">name</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">&quot;number&quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">name</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="nx">ρσ_expr_temp</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">name</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nx">name</span><span class="p">];</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">};</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">strings</span><span class="p">.</span><span class="nx">__module__</span><span class="p">)</span><span class="w"> </span><span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperties</span><span class="p">(</span><span class="nx">strings</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">__module__</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;pythonize&quot;</span><span class="p">}</span>
+<span class="w">    </span><span class="p">});</span>
+
+<span class="w">    </span><span class="nx">ρσ_modules</span><span class="p">.</span><span class="nx">pythonize</span><span class="p">.</span><span class="nx">strings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">strings</span><span class="p">;</span>
+<span class="p">})();</span>
+<span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">__main__</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="s2">&quot;use strict&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">display</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">canvas</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">scene</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">canvas</span><span class="p">();</span>
+
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">version</span><span class="p">,</span><span class="w"> </span><span class="nx">print</span><span class="p">,</span><span class="w"> </span><span class="nx">arange</span><span class="p">,</span><span class="w"> </span><span class="nx">__name__</span><span class="p">,</span><span class="w"> </span><span class="nx">type</span><span class="p">,</span><span class="w"> </span><span class="nx">ρσ_ls</span><span class="p">,</span><span class="w"> </span><span class="nx">theta</span><span class="p">,</span><span class="w"> </span><span class="nx">thetaDot</span><span class="p">,</span><span class="w"> </span><span class="nx">l</span><span class="p">,</span><span class="w"> </span><span class="nx">g</span><span class="p">,</span><span class="w"> </span><span class="nx">mass</span><span class="p">,</span><span class="w"> </span><span class="nx">miu</span><span class="p">,</span><span class="w"> </span><span class="nx">m</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">,</span><span class="w"> </span><span class="nx">gamma</span><span class="p">,</span><span class="w"> </span><span class="nx">x</span><span class="p">,</span><span class="w"> </span><span class="nx">y</span><span class="p">,</span><span class="w"> </span><span class="nx">bob</span><span class="p">,</span><span class="w"> </span><span class="nx">arm</span><span class="p">,</span><span class="w"> </span><span class="nx">dt</span><span class="p">,</span><span class="w"> </span><span class="nx">time</span><span class="p">,</span><span class="w"> </span><span class="nx">tdd</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">ρσ_list_decorate</span><span class="p">([</span><span class="w"> </span><span class="s2">&quot;3.2&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;glowscript&quot;</span><span class="w"> </span><span class="p">]);</span>
+<span class="w">    </span><span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">[</span><span class="s1">&#39;+&#39;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">r</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">r</span><span class="p">)}</span>
+<span class="w">    </span><span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">[</span><span class="s1">&#39;*&#39;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">r</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="k">return</span><span class="w"> </span><span class="nx">__array_times_number</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="nx">r</span><span class="p">)}</span>
+<span class="w">    </span><span class="nb">window</span><span class="p">.</span><span class="nx">__GSlang</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;vpython&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">print</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">GSprint</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">arange</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">range</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">__name__</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;__main__&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">pytype</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">strings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">ρσ_modules</span><span class="p">.</span><span class="nx">pythonize</span><span class="p">.</span><span class="nx">strings</span><span class="p">;</span>
+
+<span class="w">    </span><span class="nx">strings</span><span class="p">();</span>
+<span class="w">    </span><span class="s2">&quot;4&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">thetaDoubleDot</span><span class="p">(</span><span class="nx">theta</span><span class="p">,</span><span class="w"> </span><span class="nx">thetaDot</span><span class="p">,</span><span class="w"> </span><span class="nx">g</span><span class="p">,</span><span class="w"> </span><span class="nx">l</span><span class="p">,</span><span class="w"> </span><span class="nx">gamma</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">ρσ_ls</span><span class="p">,</span><span class="w"> </span><span class="nx">thetaDoubleDot</span><span class="p">;</span>
+<span class="w">        </span><span class="s2">&quot;5&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">thetaDoubleDot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1</span><span class="p">[</span><span class="s2">&quot;-u&quot;</span><span class="p">]()[</span><span class="s2">&quot;*&quot;</span><span class="p">](</span><span class="nx">g</span><span class="p">)[</span><span class="s2">&quot;/&quot;</span><span class="p">](</span><span class="nx">l</span><span class="p">)[</span><span class="s2">&quot;*&quot;</span><span class="p">](</span><span class="nx">sin</span><span class="p">(</span><span class="nx">theta</span><span class="p">))[</span><span class="s2">&quot;-&quot;</span><span class="p">](</span><span class="mf">1</span><span class="p">[</span><span class="s2">&quot;*&quot;</span><span class="p">](</span><span class="nx">gamma</span><span class="p">)[</span><span class="s2">&quot;*&quot;</span><span class="p">](</span><span class="nx">thetaDot</span><span class="p">));</span>
+<span class="w">        </span><span class="s2">&quot;6&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">thetaDoubleDot</span><span class="p">;</span>
+<span class="w">    </span><span class="p">};</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">thetaDoubleDot</span><span class="p">.</span><span class="nx">__argnames__</span><span class="p">)</span><span class="w"> </span><span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperties</span><span class="p">(</span><span class="nx">thetaDoubleDot</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">__argnames__</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;theta&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;thetaDot&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;g&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;l&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;gamma&quot;</span><span class="p">]},</span>
+<span class="w">        </span><span class="nx">__module__</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="kc">null</span><span class="p">}</span>
+<span class="w">    </span><span class="p">});</span>
+
+<span class="w">    </span><span class="s2">&quot;9&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">theta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">.5</span><span class="p">;</span>
+<span class="w">    </span><span class="s2">&quot;10&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">thetaDot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span>
+<span class="w">    </span><span class="s2">&quot;11&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1</span><span class="p">;</span>
+<span class="w">    </span><span class="s2">&quot;12&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">9.8</span><span class="p">;</span>
+<span class="w">    </span><span class="s2">&quot;13&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">mass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1</span><span class="p">;</span>
+<span class="w">    </span><span class="s2">&quot;14&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">miu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">.5</span><span class="p">;</span>
+<span class="w">    </span><span class="s2">&quot;15&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">10</span><span class="p">;</span>
+<span class="w">    </span><span class="s2">&quot;16&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">6</span><span class="p">[</span><span class="s2">&quot;*&quot;</span><span class="p">](</span><span class="nx">pi</span><span class="p">)[</span><span class="s2">&quot;*&quot;</span><span class="p">](</span><span class="mf">.05</span><span class="p">)[</span><span class="s2">&quot;*&quot;</span><span class="p">](</span><span class="nx">miu</span><span class="p">);</span>
+<span class="w">    </span><span class="s2">&quot;17&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">gamma</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">b</span><span class="p">[</span><span class="s2">&quot;/&quot;</span><span class="p">](</span><span class="nx">m</span><span class="p">[</span><span class="s2">&quot;*&quot;</span><span class="p">](</span><span class="nb">Math</span><span class="p">.</span><span class="nx">pow</span><span class="p">(</span><span class="nx">l</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">)));</span>
+<span class="w">    </span><span class="s2">&quot;20&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">l</span><span class="p">[</span><span class="s2">&quot;*&quot;</span><span class="p">](</span><span class="nx">sin</span><span class="p">(</span><span class="nx">theta</span><span class="p">));</span>
+<span class="w">    </span><span class="s2">&quot;21&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1</span><span class="p">[</span><span class="s2">&quot;-u&quot;</span><span class="p">]()[</span><span class="s2">&quot;*&quot;</span><span class="p">](</span><span class="nx">l</span><span class="p">)[</span><span class="s2">&quot;*&quot;</span><span class="p">](</span><span class="nx">cos</span><span class="p">(</span><span class="nx">theta</span><span class="p">));</span>
+<span class="w">    </span><span class="s2">&quot;22&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">bob</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">ρσ_interpolate_kwargs</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="nx">sphere</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nx">ρσ_desugar_kwargs</span><span class="p">({</span><span class="nx">pos</span><span class="o">:</span><span class="w"> </span><span class="nx">vector</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="w"> </span><span class="nx">y</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">),</span><span class="w"> </span><span class="nx">radius</span><span class="o">:</span><span class="w"> </span><span class="mf">.05</span><span class="p">[</span><span class="s2">&quot;*&quot;</span><span class="p">](</span><span class="nx">l</span><span class="p">),</span><span class="w"> </span><span class="nx">color</span><span class="o">:</span><span class="w"> </span><span class="nx">color</span><span class="p">.</span><span class="nx">red</span><span class="p">,</span><span class="w"> </span><span class="nx">make_trail</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">})]);</span>
+<span class="w">    </span><span class="s2">&quot;25&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">arm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">ρσ_interpolate_kwargs</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="nx">cylinder</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nx">ρσ_desugar_kwargs</span><span class="p">({</span><span class="nx">pos</span><span class="o">:</span><span class="w"> </span><span class="nx">vector</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">),</span><span class="w"> </span><span class="nx">axis</span><span class="o">:</span><span class="w"> </span><span class="nx">bob</span><span class="p">.</span><span class="nx">pos</span><span class="p">,</span><span class="w"> </span><span class="nx">color</span><span class="o">:</span><span class="w"> </span><span class="nx">color</span><span class="p">.</span><span class="nx">white</span><span class="p">,</span><span class="w"> </span><span class="nx">size</span><span class="o">:</span><span class="w"> </span><span class="nx">vector</span><span class="p">(</span><span class="nx">l</span><span class="p">,</span><span class="w"> </span><span class="mf">.02</span><span class="p">[</span><span class="s2">&quot;*&quot;</span><span class="p">](</span><span class="nx">l</span><span class="p">),</span><span class="w"> </span><span class="mf">.02</span><span class="p">[</span><span class="s2">&quot;*&quot;</span><span class="p">](</span><span class="nx">l</span><span class="p">))})]);</span>
+<span class="w">    </span><span class="s2">&quot;28&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">dt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">.01</span><span class="p">;</span>
+<span class="w">    </span><span class="s2">&quot;29&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span>
+<span class="w">    </span><span class="s2">&quot;31&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="nx">time</span><span class="p">[</span><span class="s2">&quot;&lt;=&quot;</span><span class="p">](</span><span class="mf">100</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="s2">&quot;32&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="p">(</span><span class="k">await</span><span class="w"> </span><span class="nx">rate</span><span class="p">(</span><span class="mf">1</span><span class="p">[</span><span class="s2">&quot;/&quot;</span><span class="p">](</span><span class="nx">dt</span><span class="p">)));</span>
+<span class="w">        </span><span class="s2">&quot;33&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">tdd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="k">await</span><span class="w"> </span><span class="nx">thetaDoubleDot</span><span class="p">(</span><span class="nx">theta</span><span class="p">,</span><span class="w"> </span><span class="nx">thetaDot</span><span class="p">,</span><span class="w"> </span><span class="nx">g</span><span class="p">,</span><span class="w"> </span><span class="nx">l</span><span class="p">,</span><span class="w"> </span><span class="nx">gamma</span><span class="p">));</span>
+<span class="w">        </span><span class="s2">&quot;35&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">thetaDot</span><span class="o">=</span><span class="nx">thetaDot</span><span class="p">[</span><span class="s2">&quot;+&quot;</span><span class="p">](</span><span class="nx">tdd</span><span class="p">[</span><span class="s2">&quot;*&quot;</span><span class="p">](</span><span class="nx">dt</span><span class="p">));</span>
+<span class="w">        </span><span class="s2">&quot;36&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">theta</span><span class="o">=</span><span class="nx">theta</span><span class="p">[</span><span class="s2">&quot;+&quot;</span><span class="p">](</span><span class="nx">thetaDot</span><span class="p">[</span><span class="s2">&quot;*&quot;</span><span class="p">](</span><span class="nx">dt</span><span class="p">));</span>
+<span class="w">        </span><span class="s2">&quot;39&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">l</span><span class="p">[</span><span class="s2">&quot;*&quot;</span><span class="p">](</span><span class="nx">sin</span><span class="p">(</span><span class="nx">theta</span><span class="p">));</span>
+<span class="w">        </span><span class="s2">&quot;40&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1</span><span class="p">[</span><span class="s2">&quot;-u&quot;</span><span class="p">]()[</span><span class="s2">&quot;*&quot;</span><span class="p">](</span><span class="nx">l</span><span class="p">)[</span><span class="s2">&quot;*&quot;</span><span class="p">](</span><span class="nx">cos</span><span class="p">(</span><span class="nx">theta</span><span class="p">));</span>
+<span class="w">        </span><span class="s2">&quot;41&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">bob</span><span class="p">.</span><span class="nx">pos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">vector</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="w"> </span><span class="nx">y</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span>
+<span class="w">        </span><span class="s2">&quot;42&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">arm</span><span class="p">.</span><span class="nx">axis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">bob</span><span class="p">.</span><span class="nx">pos</span><span class="p">;</span>
+<span class="w">        </span><span class="s2">&quot;43&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">time</span><span class="o">=</span><span class="nx">time</span><span class="p">[</span><span class="s2">&quot;+&quot;</span><span class="p">](</span><span class="nx">dt</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="s2">&quot;45&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">print</span><span class="p">(</span><span class="s2">&quot;doneeee&quot;</span><span class="p">);</span>
+<span class="p">};</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">__main__</span><span class="p">.</span><span class="nx">__module__</span><span class="p">)</span><span class="w"> </span><span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperties</span><span class="p">(</span><span class="nx">__main__</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">__module__</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="kc">null</span><span class="p">}</span>
+<span class="p">});</span>
+
+<span class="p">;</span><span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">__context</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">glowscript_container</span><span class="o">:</span><span class="w"> </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#glowscript&quot;</span><span class="p">).</span><span class="nx">removeAttr</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">};</span><span class="w"> </span><span class="nx">__main__</span><span class="p">()</span><span class="w"> </span><span class="p">})})()</span>
+<span class="c1">// END JAVASCRIPT</span>
+
+<span class="c1">//--&gt;&lt;!]]&gt;</span><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+<div id="glowscript" class="glowscript">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link type="text/css" href="https://www.glowscript.org/css/redmond/2.1/jquery-ui.custom.css" rel="stylesheet" />
+<link type="text/css" href="https://www.glowscript.org/css/ide.css" rel="stylesheet" />
+<script type="text/javascript" src="https://www.glowscript.org/lib/jquery/2.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://www.glowscript.org/lib/jquery/2.1/jquery-ui.custom.min.js"></script>
+<script type="text/javascript" src="https://www.glowscript.org/package/glow.3.2.min.js"></script>
+<script type="text/javascript" src="https://www.glowscript.org/package/RSrun.3.2.min.js"></script>
+<script type="text/javascript"><!--//--><![CDATA[//><!--
+
+// START JAVASCRIPT
+;(function() {;
+var ρσ_modules = {};
+ρσ_modules.pythonize = {};
+
+(function(){
+    function strings() {
+        var string_funcs, exclude, name;
+        string_funcs = set("capitalize strip lstrip rstrip islower isupper isspace lower upper swapcase center count endswith startswith find rfind index rindex format join ljust rjust partition rpartition replace split rsplit splitlines zfill".split(" "));
+        if (!arguments.length) {
+            exclude = (function(){
+                var s = ρσ_set();
+                s.jsset.add("split");
+                s.jsset.add("replace");
+                return s;
+            })();
+        } else if (arguments[0]) {
+            exclude = Array.prototype.slice.call(arguments);
+        } else {
+            exclude = null;
+        }
+        if (exclude) {
+            string_funcs = string_funcs.difference(set(exclude));
+        }
+        var ρσ_Iter0 = string_funcs;
+        ρσ_Iter0 = ((typeof ρσ_Iter0[Symbol.iterator] === "function") ? (ρσ_Iter0 instanceof Map ? ρσ_Iter0.keys() : ρσ_Iter0) : Object.keys(ρσ_Iter0));
+        for (var ρσ_Index0 of ρσ_Iter0) {
+            name = ρσ_Index0;
+            (ρσ_expr_temp = String.prototype)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name] = (ρσ_expr_temp = ρσ_str.prototype)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name];
+        }
+    };
+    if (!strings.__module__) Object.defineProperties(strings, {
+        __module__ : {value: "pythonize"}
+    });
+
+    ρσ_modules.pythonize.strings = strings;
+})();
+async function __main__() {
+"use strict";
+    var display = canvas;
+    var scene = canvas();
+
+    var version, print, arange, __name__, type, ρσ_ls, theta, thetaDot, l, g, mass, miu, m, b, gamma, x, y, bob, arm, dt, time, tdd;
+    version = ρσ_list_decorate([ "3.2", "glowscript" ]);
+    Array.prototype['+'] = function(r) {return this.concat(r)}
+    Array.prototype['*'] = function(r) {return __array_times_number(this, r)}
+    window.__GSlang = "vpython";
+    print = GSprint;
+    arange = range;
+    __name__ = "__main__";
+    type = pytype;
+    var strings = ρσ_modules.pythonize.strings;
+
+    strings();
+    "4";
+    async function thetaDoubleDot(theta, thetaDot, g, l, gamma) {
+        var ρσ_ls, thetaDoubleDot;
+        "5";
+        thetaDoubleDot = 1["-u"]()["*"](g)["/"](l)["*"](sin(theta))["-"](1["*"](gamma)["*"](thetaDot));
+        "6";
+        return thetaDoubleDot;
+    };
+    if (!thetaDoubleDot.__argnames__) Object.defineProperties(thetaDoubleDot, {
+        __argnames__ : {value: ["theta", "thetaDot", "g", "l", "gamma"]},
+        __module__ : {value: null}
+    });
+
+    "9";
+    theta = .5;
+    "10";
+    thetaDot = 0;
+    "11";
+    l = 1;
+    "12";
+    g = 9.8;
+    "13";
+    mass = 1;
+    "14";
+    miu = .5;
+    "15";
+    m = 10;
+    "16";
+    b = 6["*"](pi)["*"](.05)["*"](miu);
+    "17";
+    gamma = b["/"](m["*"](Math.pow(l, 2)));
+    "20";
+    x = l["*"](sin(theta));
+    "21";
+    y = 1["-u"]()["*"](l)["*"](cos(theta));
+    "22";
+    bob = ρσ_interpolate_kwargs.call(this, sphere, [ρσ_desugar_kwargs({pos: vector(x, y, 0), radius: .05["*"](l), color: color.red, make_trail: true})]);
+    "25";
+    arm = ρσ_interpolate_kwargs.call(this, cylinder, [ρσ_desugar_kwargs({pos: vector(0, 0, 0), axis: bob.pos, color: color.white, size: vector(l, .02["*"](l), .02["*"](l))})]);
+    "28";
+    dt = .01;
+    "29";
+    time = 0;
+    "31";
+    while (time["<="](100)) {
+        "32";
+        (await rate(1["/"](dt)));
+        "33";
+        tdd = (await thetaDoubleDot(theta, thetaDot, g, l, gamma));
+        "35";
+        thetaDot=thetaDot["+"](tdd["*"](dt));
+        "36";
+        theta=theta["+"](thetaDot["*"](dt));
+        "39";
+        x = l["*"](sin(theta));
+        "40";
+        y = 1["-u"]()["*"](l)["*"](cos(theta));
+        "41";
+        bob.pos = vector(x, y, 0);
+        "42";
+        arm.axis = bob.pos;
+        "43";
+        time=time["+"](dt);
+    }
+    "45";
+    print("doneeee");
+};
+if (!__main__.__module__) Object.defineProperties(__main__, {
+    __module__ : {value: null}
+});
+
+;$(function(){ window.__context = { glowscript_container: $("#glowscript").removeAttr("id") }; __main__() })})()
+// END JAVASCRIPT
+
+//--><!]]></script>
+</div>
+</div></div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="markdown-notebooks.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Notebooks with MyST Markdown</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-pendulum-with-euler"><strong>Simple Pendulum with Euler</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-pendulum-with-euler-cromer"><strong>Simple Pendulum with Euler-Cromer</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><strong>Pendulum with Drag</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analytical-solution"><strong>Analytical Solution</strong></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
