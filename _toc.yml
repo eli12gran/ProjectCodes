@@ -3,8 +3,6 @@
 
 format: jb-book
 root: intro
-chapters:
-- file: markdown
-- file: markdown-notebooks
+chapters: 
 - file: PendulumNew
 - file: notebooks
