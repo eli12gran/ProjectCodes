@@ -531,7 +531,48 @@ document.write(`
 </div>
 </div>
 <p>As we can see in the graph, the numerical solution is almost the same as the analytical!!! This shows how effective and how well the code works. Also, we can see that the pendulum never stops: this makes complete sense because extern force is suposed to be the “recovery force of the motion”, the extern force doesn´t allow the motion to be lost so the pendulum doesn´t stop even if it has drag force.</p>
-<p>Now, the easiest way of understandin this is watching a simulation. Let´s make it!!</p>
+<hr class="docutils" />
+<p>We also compute the values of <span class="math notranslate nohighlight">\(\omega\)</span> so let´s watch how it´s its behavior with different extern force values and the same <span class="math notranslate nohighlight">\(\gamma\)</span> value in the numerical solution:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">externForceNumericalOmega</span><span class="p">(</span><span class="n">fd_values</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">l</span><span class="p">):</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="mf">9.8</span> 
+    <span class="n">time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mf">0.04</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">FD</span> <span class="ow">in</span> <span class="n">fd_values</span><span class="p">:</span>
+        <span class="n">w_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">w</span><span class="p">]</span>
+        <span class="n">theta_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">theta</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">time</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">w_new</span> <span class="o">=</span> <span class="n">w_values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="p">(</span><span class="n">g</span> <span class="o">/</span> <span class="n">l</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta_values</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">+</span> <span class="n">gamma</span> <span class="o">*</span> <span class="n">w_values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="p">(</span><span class="n">FD</span> <span class="o">/</span> <span class="n">m</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">time</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span> <span class="o">*</span> <span class="n">time</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">theta_new</span> <span class="o">=</span> <span class="n">theta_values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">w_new</span> <span class="o">*</span> <span class="n">time</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+            <span class="n">w_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">w_new</span><span class="p">)</span>
+            <span class="n">theta_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">theta_new</span><span class="p">)</span>
+
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">theta_values</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;FD = </span><span class="si">{</span><span class="n">FD</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;best&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Omega Values&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Numerical Solution for Pendulum with Drag and External Force&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="s2">&quot;---&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">externForceNumericalOmega</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/fedc92d24c7683b6c6326b98aa3e27c1e046223390ebc00ac8b0c914f5506fc9.png" src="_images/fedc92d24c7683b6c6326b98aa3e27c1e046223390ebc00ac8b0c914f5506fc9.png" />
+</div>
+</div>
+<p>Now, the easiest way of understanding this is watching a simulation. Let´s make it!!</p>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="d-graph">
 <h1><strong>3D graph</strong><a class="headerlink" href="#d-graph" title="Permalink to this heading">#</a></h1>
@@ -540,13 +581,13 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%html</span>
 
-<span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;simulaciones/PendulumExternForce.html&quot;</span> <span class="na">width</span><span class="o">=</span><span class="s">&quot;700&quot;</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;400&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">iframe</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;simulaciones/PendulumExternForce.html&quot;</span> <span class="na">width</span><span class="o">=</span><span class="s">&quot;800&quot;</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;400&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">iframe</span><span class="p">&gt;</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-<iframe src="simulaciones/PendulumExternForce.html" width="700" height="400"></iframe>
+<iframe src="simulaciones/PendulumExternForce.html" width="800" height="400"></iframe>
 </div></div>
 </div>
 </section>
