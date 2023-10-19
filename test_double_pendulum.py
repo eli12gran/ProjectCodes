@@ -34,5 +34,7 @@ def test_double_pendulum():
                                                      initial_condition_1,
                                                      initial_condition_2)
 
-    assert abs(np.average(numeric_theta2[:, 0] - theta2)) > 1*10**-2
+    assert abs(np.average(numeric_theta2[:, 0] - theta2)) < 1*10**-2
     assert abs(np.average(numeric_theta1[:, 0] - theta1)) < 1 * 10 ** -2
+
+
