@@ -1,24 +1,25 @@
 import numpy as np
-import matplotlib.pyplot as plt
 
-
-def externforcenumerical(gravity, F0, x0, mass, v0, w, gamma, longitude, plot=True):
-    w0 = np.sqrt(g / l)
-
-    # Formulas
-    omega1 = np.sqrt(w0 ** 2 - (gamma ** 2) / 4)
-    A = (F0 / m) / np.sqrt((w0 ** 2 - w ** 2) ** 2 + (gamma * w) ** 2)
-    delta = np.arctan(gamma * w / (w0 ** 2 - w ** 2))
-    beta = np.arctan((1 / omega1) * ((A * w * np.sin(delta)) / (x0 - A * np.cos(delta)) - gamma / 2))
-    B = (x0 - A * np.cos(delta)) / np.cos(beta)
-
+def extern_force_numerical(fd_values, initial_theta, mass, omega, gamma, length):
+    """
+    :param fd_values: List of Extern Force Values
+    :param initial_theta: Initial value for angle theta
+    :param mass: Mass of the object
+    :param omega: Initial value for extern force frequency
+    :param gamma: Value of drag coefficient
+    :param length: Length of the string
+    :return:
+    """
+    gravity = 9.8
     time = np.arange(0, 60, 0.04)
+    for FD in fd_values:
+        omega = [omega]
+        theta = [initial_theta]
+        for i in range(len(time) - 1):
+            omega.append(omega[i] - (gravity / length * np.sin(theta[i]) + gamma * omega[i] -
+                                     (FD / mass) * np.cos(2 / 3 * time[i])) * time[1])
+            theta.append(theta[i] + omega[i + 1] * time[1])
+    return theta
 
-    x = B * np.exp(-gamma * time / 2) * np.cos(omega1 * time + beta) + A * np.cos(w * time - delta)
 
-    plt.plot(time, x)
-    plt.grid("--")
-    plt.xlabel('Time')
-    plt.ylabel('Displacement')
-    plt.title('Solution of the Differential Equation')
-    plt.show()
+extern_force_numerical([1.2], 0.2, 1, 0., 0.5, 4.)
