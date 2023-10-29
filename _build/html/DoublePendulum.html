@@ -369,7 +369,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="double-pendulum">
 <h1><strong>Double Pendulum</strong><a class="headerlink" href="#double-pendulum" title="Permalink to this heading">#</a></h1>
-<p>A double pendulum consists of one pendulum attached to another. Double pendula are an example of a simple physical system which can exhibit chaotic Eric Weisstein’s World of Math behavior. For understanding this better, let´s take a look to the next image:</p>
+<p>A double pendulum consists of one pendulum attached to another. Double pendulums are an example of a simple physical system which can exhibit chaotic Eric Weisstein’s World of Math behavior. For understanding this better, let´s take a look to the next image:</p>
 <p><img alt="image.png" src="attachment:3fa9bcd8-6bee-4997-b25e-f064db1ad5c0.png" /></p>
 <p>Consider a double bob pendulum with masses <span class="math notranslate nohighlight">\(m_{1}\)</span> and <span class="math notranslate nohighlight">\(m_{2}\)</span> attached by rigid massless wires of lengths <span class="math notranslate nohighlight">\(l_{1}\)</span> and <span class="math notranslate nohighlight">\(l_{2}\)</span>. Further, let the angles the two wires make with the vertical be denoted <span class="math notranslate nohighlight">\(\theta_{1}\)</span> and <span class="math notranslate nohighlight">\(\theta_{2}\)</span>, as illustrated above. Finally, let gravity be given by <span class="math notranslate nohighlight">\(g\)</span>. Then the positions of the bobs are given by:</p>
 <div class="math notranslate nohighlight">
@@ -380,6 +380,151 @@ document.write(`
 \[x_{2} = l_{1}sin(\theta_{1}) + l_{2} sin(\theta_{2})\]</div>
 <div class="math notranslate nohighlight">
 \[y_{2} = -l_{1}cos(\theta_{1}) - l_{2}cos(\theta_{2})\]</div>
+<p>After applying the Lagrangian operator and some mathematical process we found the equations for <span class="math notranslate nohighlight">\(\ddot{\theta}_{1}\)</span> and <span class="math notranslate nohighlight">\(\ddot{\theta}_{2}\)</span>. (We will add a link to the mathematical process that we just mentioned because it is really long and it will be more explicative if you go to the webpage). The values for <span class="math notranslate nohighlight">\(\ddot{\theta_{1}}\)</span> and <span class="math notranslate nohighlight">\(\ddot {\theta_{2}}\)</span>  are:</p>
+<div class="math notranslate nohighlight">
+\[\ddot {\theta_{1}} = \frac {-g (m_{1}+m_{2}) sin(\theta_{1}) + m_{2} (-\dot{\theta_{1}}^{2} (l_{2} m_{1} +l_{1} m_{2} cos(\theta_{1} - \theta_{2})) sen(\theta_{1} - \theta_{2}) + g m_{2} cos(\theta_{1} - \theta_{2}) sen(\theta_{2})) }{l_{1} (m_{1} + m_{2} - m_{2}  cos(\theta_{1} - \theta_{2})^{2})}\]</div>
+<div class="math notranslate nohighlight">
+\[\ddot{\theta_{2}} = \frac { -m_{2} ( (g (m_{1} + m_{2}) cos(\theta_{1}) + \ddot {\theta_{1}^2}) (l_{1} (m_{1} + m_{2}) + l_{2} m_{2} cos(\theta_{1} - \theta_{2}))) sin(\theta_{1} - \theta_{2}))}{ -l_{2} m_{1} (m_{1} + m_{2}) + l_{2} m_{2}^2 cos(\theta_{1} - \theta_{2})^2 }\]</div>
+<hr class="docutils" />
+<p>Now, let’s analyze these two angle formulas a little. The double pendulum works like two normal pendulums individually, but the double pendulum joins these two pendulums. This means that harmonic/periodic/uniform behavior could be expected when <strong>the initial angle of both pendulums is less than or equal to 15 degrees</strong> and we could expect chaotic behavior in any other case.</p>
+<p>And now, let´s see the code!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">equations</span><span class="p">(</span><span class="n">initial_conditions1</span><span class="p">,</span> <span class="n">initial_conditions_2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    :param initial_conditions1:</span>
+<span class="sd">    :param initial_conditions_2:</span>
+<span class="sd">    :return: time, and values for theta 1 and 2 , and its derivatives</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">initial_conditions1</span><span class="p">)</span>
+    <span class="n">array_theta_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+    <span class="n">array_theta_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+    <span class="c1"># constants</span>
+    <span class="n">gravity</span> <span class="o">=</span> <span class="mf">9.8</span>
+    <span class="n">mass_1</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">mass_2</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">length_1</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">length_2</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">array_theta_1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">initial_conditions1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">array_theta_2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">initial_conditions_2</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">array_theta_1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="p">((</span><span class="n">gravity</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">mass_1</span> <span class="o">+</span> <span class="n">mass_2</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">initial_conditions1</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span>
+                          <span class="n">mass_2</span> <span class="o">*</span> <span class="p">(</span><span class="n">gravity</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">initial_conditions1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span>
+                                                     <span class="mi">2</span> <span class="o">*</span> <span class="n">initial_conditions_2</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span>
+                            <span class="n">length_2</span> <span class="o">*</span> <span class="n">initial_conditions_2</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span>
+                            <span class="n">length_1</span> <span class="o">*</span> <span class="n">initial_conditions1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span>
+                                <span class="n">initial_conditions1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span>
+                                <span class="n">initial_conditions_2</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span>
+                            <span class="n">initial_conditions1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">initial_conditions_2</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span> <span class="o">/</span> <span class="p">(</span>
+                                 <span class="mi">2</span> <span class="o">*</span> <span class="n">length_1</span> <span class="o">*</span> <span class="p">(</span><span class="n">mass_1</span> <span class="o">+</span> <span class="n">mass_2</span> <span class="o">-</span> <span class="n">mass_2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">initial_conditions1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span>
+                                                                                   <span class="n">initial_conditions_2</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)))</span>
+
+    <span class="n">array_theta_2</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(((</span><span class="n">mass_1</span> <span class="o">+</span> <span class="n">mass_2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">length_1</span> <span class="o">*</span> <span class="n">initial_conditions1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span>
+                                              <span class="n">gravity</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">initial_conditions1</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> <span class="o">+</span> <span class="n">length_2</span> <span class="o">*</span> <span class="n">mass_2</span> <span class="o">*</span>
+                         <span class="n">initial_conditions_2</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">initial_conditions1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span>
+                        <span class="n">initial_conditions_2</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> <span class="o">*</span>
+                        <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">initial_conditions1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">initial_conditions_2</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> <span class="o">/</span> <span class="p">(</span>
+                               <span class="n">length_2</span> <span class="o">*</span> <span class="p">(</span><span class="n">mass_1</span> <span class="o">+</span> <span class="n">mass_2</span> <span class="o">-</span> <span class="n">mass_2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">initial_conditions1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span>
+                                                                             <span class="n">initial_conditions_2</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">array_theta_1</span><span class="p">,</span> <span class="n">array_theta_2</span>
+
+
+<span class="c1"># rk4 numeric method used to calculate both theta&#39;s</span>
+<span class="k">def</span> <span class="nf">rk4</span><span class="p">(</span><span class="n">initial_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">,</span> <span class="n">steps</span><span class="p">,</span> <span class="n">initial_conditions1</span><span class="p">,</span> <span class="n">initial_conditions2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    :param initial_time: 0 normally</span>
+<span class="sd">    :param end_time: time in seconds</span>
+<span class="sd">    :param steps: how many steps</span>
+<span class="sd">    :param initial_conditions1:</span>
+<span class="sd">    :param initial_conditions2:</span>
+<span class="sd">    :return: values for the time array and theta 1 and 2 , and its derivatives</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">delta_time</span> <span class="o">=</span> <span class="p">(</span><span class="n">end_time</span> <span class="o">-</span> <span class="n">initial_time</span><span class="p">)</span> <span class="o">/</span> <span class="n">steps</span>
+    <span class="n">time_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">initial_time</span><span class="p">,</span> <span class="n">end_time</span> <span class="o">+</span> <span class="n">delta_time</span><span class="p">,</span> <span class="n">delta_time</span><span class="p">)</span>
+    <span class="n">theta_1</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">theta_2</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">theta_1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">initial_conditions1</span><span class="p">)</span>
+    <span class="n">theta_2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">initial_conditions2</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">steps</span><span class="p">):</span>
+        <span class="n">array_theta_1</span><span class="p">,</span> <span class="n">array_theta_2</span> <span class="o">=</span> <span class="n">equations</span><span class="p">(</span><span class="n">theta_1</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">theta_2</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">k1x</span> <span class="o">=</span> <span class="n">delta_time</span> <span class="o">*</span> <span class="n">array_theta_1</span>
+        <span class="n">k1y</span> <span class="o">=</span> <span class="n">delta_time</span> <span class="o">*</span> <span class="n">array_theta_2</span>
+        <span class="n">array_theta_1</span><span class="p">,</span> <span class="n">array_theta_2</span> <span class="o">=</span> <span class="n">equations</span><span class="p">(</span><span class="n">theta_1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">k1x</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">theta_2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">k1y</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">k2x</span> <span class="o">=</span> <span class="n">delta_time</span> <span class="o">*</span> <span class="n">array_theta_1</span>
+        <span class="n">k2y</span> <span class="o">=</span> <span class="n">delta_time</span> <span class="o">*</span> <span class="n">array_theta_2</span>
+        <span class="n">array_theta_1</span><span class="p">,</span> <span class="n">array_theta_2</span> <span class="o">=</span> <span class="n">equations</span><span class="p">(</span><span class="n">theta_1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">k2x</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">theta_2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">k2y</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">k3x</span> <span class="o">=</span> <span class="n">delta_time</span> <span class="o">*</span> <span class="n">array_theta_1</span>
+        <span class="n">k3y</span> <span class="o">=</span> <span class="n">delta_time</span> <span class="o">*</span> <span class="n">array_theta_2</span>
+        <span class="n">array_theta_1</span><span class="p">,</span> <span class="n">array_theta_2</span> <span class="o">=</span> <span class="n">equations</span><span class="p">(</span><span class="n">theta_1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">k3x</span><span class="p">,</span> <span class="n">theta_2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">k3y</span><span class="p">)</span>
+        <span class="n">k4x</span> <span class="o">=</span> <span class="n">delta_time</span> <span class="o">*</span> <span class="n">array_theta_1</span>
+        <span class="n">k4y</span> <span class="o">=</span> <span class="n">delta_time</span> <span class="o">*</span> <span class="n">array_theta_2</span>
+        <span class="n">theta_1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">theta_1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">6</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">k1x</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">k2x</span> <span class="o">+</span> <span class="n">k3x</span><span class="p">)</span> <span class="o">+</span> <span class="n">k4x</span><span class="p">))</span>
+        <span class="n">theta_2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">theta_2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">6</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">k1y</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">k2y</span> <span class="o">+</span> <span class="n">k3y</span><span class="p">)</span> <span class="o">+</span> <span class="n">k4y</span><span class="p">))</span>
+
+    <span class="n">theta_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">theta_1</span><span class="p">)</span>
+    <span class="n">theta_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">theta_2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">time_array</span><span class="p">,</span> <span class="n">theta_1</span><span class="p">,</span> <span class="n">theta_2</span>
+
+
+<span class="n">u1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">u2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="mi">5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)),</span> <span class="mi">0</span><span class="p">])</span>
+
+<span class="n">time</span><span class="p">,</span> <span class="n">theta1</span><span class="p">,</span> <span class="n">theta2</span> <span class="o">=</span> <span class="n">rk4</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="n">u1</span><span class="p">,</span> <span class="n">u2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">theta1</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">theta2</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="s2">&quot;---&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Double Pendulum&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Theta_1 &amp; Theta_2 angle values&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/ddd828ddc5ddf40e26a9b89d222764723b40e14aa6d8d55e3f85e17133890cd5.png" src="_images/ddd828ddc5ddf40e26a9b89d222764723b40e14aa6d8d55e3f85e17133890cd5.png" />
+</div>
+</div>
+<p>Let´s try a bigger angle for each pendulum amd see their behavior individually!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">u1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="mi">45</span><span class="p">),</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">u2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="mi">140</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)),</span> <span class="mi">0</span><span class="p">])</span>
+
+<span class="n">time</span><span class="p">,</span> <span class="n">theta1</span><span class="p">,</span> <span class="n">theta2</span> <span class="o">=</span> <span class="n">rk4</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="n">u1</span><span class="p">,</span> <span class="n">u2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">theta2</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span><span class="n">theta2</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="s2">&quot;---&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Double Pendulum Theta2&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Theta_2 values&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Theta_2 derivate values&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/c16e1717607f415b70411212df99b1304e6ae38e032b6953b572c7026c6750ab.png" src="_images/c16e1717607f415b70411212df99b1304e6ae38e032b6953b572c7026c6750ab.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">u1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="mi">45</span><span class="p">),</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">u2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="mi">140</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)),</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">time</span><span class="p">,</span> <span class="n">theta1</span><span class="p">,</span> <span class="n">theta2</span> <span class="o">=</span> <span class="n">rk4</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="n">u1</span><span class="p">,</span> <span class="n">u2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">theta1</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span><span class="n">theta1</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="s2">&quot;---&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Double Pendulum Theta1&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Theta_1 values&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Theta_1 derivate values&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/4d35ab49506f095e1b13ea01012fe6a66356aee6df3cfc2cbc025f43146acc9f.png" src="_images/4d35ab49506f095e1b13ea01012fe6a66356aee6df3cfc2cbc025f43146acc9f.png" />
+</div>
+</div>
+<p>As can be seen in the first graph, the behavior of both pendulums is uniform, given that the initial angles of both pendulums in this graph are 5° and 5° respectively. But if we look at the other two graphs where we graph the value of the angle <span class="math notranslate nohighlight">\(\theta_{1}\)</span> and its derivative; and the value of the angle <span class="math notranslate nohighlight">\(\theta_{2}\)</span> and its derivative, we can see that the behavior of each of the pendulums is completely chaotic and there is no longer a trend or uniformity in their oscillations.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%html</span>
@@ -393,11 +538,7 @@ document.write(`
 <iframe src="simulaciones/DoublePendulum.html" width="800" height="400"></iframe>
 </div></div>
 </div>
-<p>$</p>
-<div class="math notranslate nohighlight">
-\[\Theta_{2pp} = -\frac{m_2 \left(g \left(m_1 + m_2\right) \cos(\theta_1) + \theta_1'^2 \left(l_1 \left(m_1 + m_2\right) + l_2 m_2 \cos(\theta_1 - \theta_2)\right)\right) \sin(\theta_1 - \theta_2) - \left(-l_2 m_1 \left(m_1 + m_2\right) + l_2 m_2^2 \cos(\theta_1 - \theta_2)^2\right)}{l_2 \left(m_1 + m_2 - m_2 \cos(\theta_1 - \theta_2)^2\right)}\]</div>
-<div class="math notranslate nohighlight">
-\[y = -\frac{-g m_1 \left(m_1 + m_2\right) \sin(\theta_1) + m_2 \left(-\theta_1'^2 \left(l_2 m_1 + l_1 m_2 \cos(\theta_1 - \theta_2)\right) \sin(\theta_1 - \theta_2) + g m_2 \cos(\theta_1 - \theta_2) \sin(\theta_2)\right)}{l_1 m_1 \left(m_1 + m_2\right) - l_1 m_2^2 \cos(\theta_1 - \theta_2)^2}\]</div>
+<p><strong><a class="reference external" href="https://scienceworld.wolfram.com/physics/DoublePendulum.html">Mathematical Process of Double Pendulum deduction</a></strong></p>
 </section>
 
     <script type="text/x-thebe-config">
