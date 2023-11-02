@@ -1,0 +1,81 @@
+\documentclass[12pt, letterpaper]{article}
+\begin{document}
+\title{Physics animations using open software}
+\maketitle % title page is now complete
+\author{Nombres de los autores del articulo}
+
+
+\section{Introduction (Jaime Hoyos..)} 
+
+Visual Python and Blender are free and open source graphics software for modeling, animation and visualization and it is plenty used for visualization. Visual python library can be imported in Python and also can be run online (Glowscript). Blender has an embeded Python interpreter which allows to run scripts in a Python enviroment. Likewise, Blender provides a module (Blender-Python - bpy) which can be imported in a python script in order to access data, classes and functions of Blender (cite page of the bpy library). The main goal of this manuscript is to develop sone physics computer simulations requiring the use of numerical methods. Along this process, we write the scripts in python following the rules of Clean Code, documentation ad testing as required for the good software engineering good practice. The main idea of animations is they that can be a complement to recreate the abstract physics concepts involved, we expect this can motivate students in learning physical concepts and numerical methods having a tool to visulaize physical movements, thus, helping teachers to incorporate the physical movements in a more realistic view..
+
+\section{Theoretical Background (Jaime)}
+
+The dynamics of a rigid body of constant mass $m$ can be modeled by second law of Newton which states that the center of mass acceleration $\vec{a}$ for an applied force $\vec{F}$ is given by the equation of motion:
+
+\begin{equation}
+\vec{a}=\vec{F}/m.
+\end{equation}
+
+For special cases as that of constant force $\vec{F}$ last equation of motion accepts a direct integration which leads 
+Ecuaciones de Euler-Lagrange al apendice
+
+\section{Animation of movements whose equations of motion have analytical solutions}
+\subsection{Motions under the action of constant forces}
+\subsubsection{Rectilinear motion}
+Here, the translation motion of a rigid body following a rectilinear motion it is animated. This movement is consequence of a constant force $\vec{F}$ applied to the center of mass body which produces a constant acceleration $\vec{a}$ according to the equation of motion. The force and acceleration point in a fixed direction, assumed to be the $x$ Cartesian coordinate. In this case equation of motion can be integrated twice respect to the time variable to obtain the function $x(t)$ giving the $x$ coordinate of the center of mass body as a function of time $t$ (ref. book of general physics):
+
+\begin{equation}
+x(t)=x_0+v_0(t-t_0)+\frac{1}{2}a(t-t_0)^2,
+\end{equation}
+
+with $t_0$ the initial reference time, $x(t_0)\equiv x_0$ and $v(t_0)\equiv v_0$ the initial position and velocity.
+
+Here, we explain the python algorithm neccesary to carry out the animation of the body movement. In this animation we consider different scenarios: i) a cube block acceleration in the $x$ direction on a fixed floor, ii) boy sliding on a 
+
+
+Movimiento con Fuerzas Constantes: Rectilineo, Parabolico ideal, Animar en Blender las soluciones (Jhon)
+
+Movimiento con fuerzas variables: Cuerpo bajo la acción gravitacional y fuerza viscosa tipo laminar
+
+Movimiento Circular: Pelotica unida a cuerda, Peralte, Animar en Blender las soluciones (Jaime)
+
+Pendulo lineal y masa -resorte (Leandro)  Animar en Blender las soluciones
+
+
+\section{Uso del computador en las simulaciones fisicas y Proceso del Desarollo de Software, Jaime}
+
+Codigo limpio (PEP8) (Pylint) (Leandro)
+Documentacion (Leandro)
+Tests implementados (PyTest) (Jhon, Leandro)
+Repo Git-Github  (Jaime)
+Open Science (Jaime)
+Licencia (Jaime)
+
+\subsection{Metodos Numericos Euler, Euler Crommer,  Taylor de Orden 2, Runge Kutta para el apendice (Luis Carlos)}
+\subsection{Ejemplos Fisicos soluble mediante el uso del computador}
+
+Pendulo no lineal (Luis Carlos y Jaime) Animaciones en Blender
+
+Pendulo Doble (Luis Carlos y Jaime ) Animaciones en Blender
+
+Movimiento Planetario (Luis Carlos y Jaime ) Animaciones en Blender
+
+
+\section{Resultados (Animaciones en Blender ) (Juan David)}
+
+
+\section{Discusion de Resultados}
+
+
+\section{Conclusion}
+
+We hope this article will help you prepare beautifully typeset
+manuscripts for the American Journal of Physics.  Good typesetting requires
+considerable attention to detail, but this effort will pay off by making your
+manuscript easier and more enjoyable to read.  Your colleagues, reviewers, 
+and editors will be grateful for your effort.
+
+
+
+\end{document}
