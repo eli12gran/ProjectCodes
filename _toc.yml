@@ -7,3 +7,4 @@ chapters:
 - file: PendulumNew
 - file: ExternForcePendulum
 - file: DoublePendulum
+- file: WaveEquation2D
