@@ -413,12 +413,18 @@ document.write(`
 <p>Now, let’s examine the code:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">nbformat</span>
-<span class="kn">from</span> <span class="nn">nbclient</span> <span class="kn">import</span> <span class="n">NotebookClient</span>
-
-<span class="n">notebook_filename</span> <span class="o">=</span> <span class="s2">&quot;/home/eligran12/ProjectCodes/WaveEquation1D.ipynb&quot;</span>
-<span class="n">nb</span> <span class="o">=</span> <span class="n">nbformat</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">notebook_filename</span><span class="p">,</span> <span class="n">as_version</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">NotebookClient</span><span class="p">(</span><span class="n">nb</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">kernel_name</span><span class="o">=</span><span class="s1">&#39;python3&#39;</span><span class="p">,</span> <span class="n">resources</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;metadata&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;path&#39;</span><span class="p">:</span> <span class="s1">&#39;notebooks/&#39;</span><span class="p">}})</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+ <span class="s2">&quot;metadata&quot;</span><span class="p">:</span> <span class="p">{</span>
+  <span class="s2">&quot;execution&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s2">&quot;timeout&quot;</span><span class="p">:</span> <span class="mi">600</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;metadata&#39;: {&#39;execution&#39;: {&#39;timeout&#39;: 600}}}
 </pre></div>
 </div>
 </div>
