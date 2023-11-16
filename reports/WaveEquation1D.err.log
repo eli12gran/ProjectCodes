@@ -37,12 +37,6 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy.stats import norm
-import scipy.integrate as integrate
-import sympy as sp
-from matplotlib.animation import FuncAnimation
-from IPython.display import HTML
+HTML(anim.to_jshtml())
 -------------------
 
