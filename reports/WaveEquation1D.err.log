@@ -37,8 +37,6 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-['fig = plt.figure(figsize=(10, 5))', "ax = fig.add_subplot(111, projection='3d')", '', '# Parameters for 3D plot', 'X, T = np.meshgrid(x, time)']
-...
-['', '# Add colorbar', 'fig.colorbar(surf, ax=ax, shrink=0.5, aspect=10)', '', 'plt.show()']
+HTML(anim.to_jshtml())
 -------------------
 
