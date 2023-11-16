@@ -366,7 +366,6 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-made-by-jhonathan-quiroz-and-jose-vergara"><em><strong>Code made by Jhonathan Quiroz and Jose Vergara</strong></em></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wavefield-snapshots-at-100-200-800-milliseconds"><strong>Wavefield snapshots at 100, 200… 800 milliseconds.</strong></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#density-plot-animations"><strong>Density Plot Animations</strong></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#animation-of-2d-wave-equation"><strong>Animation of 2D wave equation:</strong></a></li>
@@ -386,8 +385,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="wave-equation-2d-finite-differences-method">
 <h1><strong>Wave Equation 2D: Finite Differences Method</strong><a class="headerlink" href="#wave-equation-2d-finite-differences-method" title="Permalink to this heading">#</a></h1>
-<section id="code-made-by-jhonathan-quiroz-and-jose-vergara">
-<h2><em><strong>Code made by Jhonathan Quiroz and Jose Vergara</strong></em><a class="headerlink" href="#code-made-by-jhonathan-quiroz-and-jose-vergara" title="Permalink to this heading">#</a></h2>
+<p><em><strong>Code made by Jhonathan Quiroz and Jose Vergara</strong></em></p>
 <p>In the following code the wave equation in two dimensions with a source is solved. The boundary conditions are Dirichlet type and homogeneous. Let’s look at the problem we are solving:</p>
 <div class="math notranslate nohighlight">
 \[\nabla^2u(x,t) - \frac {1}{c^2(x)} \frac{\partial^2 u(x,t)}{\partial t^2} = -g( x,t)\]</div>
@@ -436,6 +434,9 @@ $<span class="math notranslate nohighlight">\(u(a,y,t) = p(y,t)\)</span>$</p>
 <p>In this case, the same thing happens: if we observe the equation we just solved, we will realize that the step <span class="math notranslate nohighlight">\(w^{k+1}_{i,j}\)</span> is defined in terms of the step <span class="math notranslate nohighlight">\(w^{k-1}_{i,j}\)</span>. Therefore, here too, we must approximate this step through the temporal derivative. After the necessary manipulation, we find that this first step, i.e., when <span class="math notranslate nohighlight">\(k=0\)</span>, is described by:</p>
 <div class="math notranslate nohighlight">
 \[w^{1}_{i,j} = \frac {1}{2} [\alpha^{2}_{i,j} (w^{0}_{i+1,j} + w^{0}_{i-1,j}) + \beta^{2}_{i,j} (w^{0}_{i,j+1} + w^{0}_{i,j-1}) + 2 (1 - \alpha^2_{i,j} - \beta^2_{i,j}) w^{0}_{i,j} + 2 Δt n_{i,j} + c^{2}_{i,j} (Δt)^2 g^{0}_{i,j}]\]</div>
+<hr class="docutils" />
+<p>Now, we´re ready for start the code!</p>
+<p>Let´s see it:$</p>
 <hr class="docutils" />
 <p>Now, we´re ready for start the code!</p>
 <p>Let´s see it:</p>
@@ -612,19 +613,18 @@ $<span class="math notranslate nohighlight">\(u(a,y,t) = p(y,t)\)</span>$</p>
 <span class="ne">---&gt; </span><span class="mi">83</span>               <span class="n">v</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">dt</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">g</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">t</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="p">)</span>
 <span class="g g-Whitespace">     </span><span class="mi">84</span> <span class="k">return</span> <span class="n">w</span>
 
-<span class="nn">Cell In[3], line 43,</span> in <span class="ni">g</span><span class="nt">(i, j, t)</span>
-<span class="g g-Whitespace">     </span><span class="mi">40</span>   <span class="k">return</span> <span class="mf">0.0</span>
-<span class="g g-Whitespace">     </span><span class="mi">42</span> <span class="c1"># Source</span>
-<span class="ne">---&gt; </span><span class="mi">43</span> <span class="k">def</span> <span class="nf">g</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
-<span class="g g-Whitespace">     </span><span class="mi">44</span>   <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="p">(</span><span class="n">nx</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">==</span> <span class="p">(</span><span class="n">ny</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-<span class="g g-Whitespace">     </span><span class="mi">45</span>     <span class="n">f</span> <span class="o">=</span> <span class="mf">30.0</span> <span class="c1">#Hz</span>
+<span class="nn">Cell In[3], line 16,</span> in <span class="ni">v</span><span class="nt">(x, y)</span>
+<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="n">dt</span> <span class="o">=</span> <span class="mf">0.0005</span>
+<span class="g g-Whitespace">     </span><span class="mi">15</span> <span class="c1"># Velocity</span>
+<span class="ne">---&gt; </span><span class="mi">16</span> <span class="k">def</span> <span class="nf">v</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+<span class="g g-Whitespace">     </span><span class="mi">17</span>   <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mf">0.2</span><span class="p">:</span>
+<span class="g g-Whitespace">     </span><span class="mi">18</span>     <span class="k">return</span> <span class="mf">1.0</span>
 
 <span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
 </div>
 </div>
 </div>
-</section>
 <section id="wavefield-snapshots-at-100-200-800-milliseconds">
 <h2><strong>Wavefield snapshots at 100, 200… 800 milliseconds.</strong><a class="headerlink" href="#wavefield-snapshots-at-100-200-800-milliseconds" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
@@ -746,7 +746,7 @@ $<span class="math notranslate nohighlight">\(u(a,y,t) = p(y,t)\)</span>$</p>
 </div>
 <section id="animation-of-2d-wave-equation">
 <h3><strong>Animation of 2D wave equation:</strong><a class="headerlink" href="#animation-of-2d-wave-equation" title="Permalink to this heading">#</a></h3>
-<p><img alt="wave2d (1).gif" src="attachment:775f9181-4727-4cca-817e-031c1db8f3e5.gif" /></p>
+<p><img alt="wave2d.gif" src="attachment:e642e14a-9e75-42fe-a9a6-1cb62a34b808.gif" /></p>
 </section>
 </section>
 <section id="d-animation">
@@ -857,7 +857,7 @@ $<span class="math notranslate nohighlight">\(u(a,y,t) = p(y,t)\)</span>$</p>
 </div>
 </div>
 </div>
-<p><img alt="wave2Dview3D.gif" src="attachment:4ee78287-3880-4ce7-889c-4fbf323ebe05.gif" /></p>
+<p><img alt="wave2Dview3D.gif" src="attachment:fb28eb5d-363a-4afd-ac6b-f0168d0ec475.gif" /></p>
 <p>We add in <strong><a class="reference external" href="https://colab.research.google.com/drive/1Jh4jFH4hEWk1LWjbkHVgYOC2-bUb-8FM#scrollTo=pr1bI0DAjBer">here</a></strong> a link to a Google Colab that has a bit of interface and/or interaction with the user and allows you to modify the initial values ​​of the graphs or directly play with the code. We hope you really use it because that´s the way where you would be able to use it for the specific values of your problem.</p>
 <p>Have Fun!! :)))</p>
 </section>
@@ -917,7 +917,6 @@ $<span class="math notranslate nohighlight">\(u(a,y,t) = p(y,t)\)</span>$</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-made-by-jhonathan-quiroz-and-jose-vergara"><em><strong>Code made by Jhonathan Quiroz and Jose Vergara</strong></em></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wavefield-snapshots-at-100-200-800-milliseconds"><strong>Wavefield snapshots at 100, 200… 800 milliseconds.</strong></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#density-plot-animations"><strong>Density Plot Animations</strong></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#animation-of-2d-wave-equation"><strong>Animation of 2D wave equation:</strong></a></li>
