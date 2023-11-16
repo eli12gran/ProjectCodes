@@ -413,6 +413,18 @@ document.write(`
 <p>Now, let’s examine the code:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">nbformat</span>
+<span class="kn">from</span> <span class="nn">nbclient</span> <span class="kn">import</span> <span class="n">NotebookClient</span>
+
+<span class="n">notebook_filename</span> <span class="o">=</span> <span class="s2">&quot;/home/eligran12/ProjectCodes/WaveEquation1D.ipynb&quot;</span>
+<span class="n">nb</span> <span class="o">=</span> <span class="n">nbformat</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">notebook_filename</span><span class="p">,</span> <span class="n">as_version</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">NotebookClient</span><span class="p">(</span><span class="n">nb</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">kernel_name</span><span class="o">=</span><span class="s1">&#39;python3&#39;</span><span class="p">,</span> <span class="n">resources</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;metadata&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;path&#39;</span><span class="p">:</span> <span class="s1">&#39;notebooks/&#39;</span><span class="p">}})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span>
@@ -688,7 +700,7 @@ document.write(`
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">12</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">13</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">HTML</span><span class="p">(</span><span class="n">anim</span><span class="o">.</span><span class="n">to_jshtml</span><span class="p">())</span>
 
 <span class="nn">File ~/anaconda3/envs/Ingenieria/lib/python3.11/site-packages/matplotlib/animation.py:1353,</span> in <span class="ni">Animation.to_jshtml</span><span class="nt">(self, fps, embed_frames, default_mode)</span>
@@ -725,14 +737,14 @@ document.write(`
 <span class="g g-Whitespace">   </span><span class="mi">1772</span>     <span class="n">err</span> <span class="o">=</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;The animation function must return a sequence &#39;</span>
 <span class="g g-Whitespace">   </span><span class="mi">1773</span>                        <span class="s1">&#39;of Artist objects.&#39;</span><span class="p">)</span>
 
-<span class="nn">Cell In[11], line 32,</span> in <span class="ni">animate</span><span class="nt">(f)</span>
+<span class="nn">Cell In[12], line 32,</span> in <span class="ni">animate</span><span class="nt">(f)</span>
 <span class="g g-Whitespace">     </span><span class="mi">30</span> <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
 <span class="g g-Whitespace">     </span><span class="mi">31</span> <span class="n">y</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="mf">3.5</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 <span class="ne">---&gt; </span><span class="mi">32</span> <span class="n">y_up</span> <span class="o">=</span> <span class="n">change</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">500</span><span class="p">),</span> <span class="n">f</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
 <span class="g g-Whitespace">     </span><span class="mi">33</span> <span class="n">line</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_up</span><span class="p">)</span>
 <span class="g g-Whitespace">     </span><span class="mi">34</span> <span class="k">return</span> <span class="n">line</span><span class="p">,</span>
 
-<span class="nn">Cell In[11], line 21,</span> in <span class="ni">change</span><span class="nt">(y, vy, f, x_)</span>
+<span class="nn">Cell In[12], line 21,</span> in <span class="ni">change</span><span class="nt">(y, vy, f, x_)</span>
 <span class="g g-Whitespace">     </span><span class="mi">19</span> <span class="k">while</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="n">f</span><span class="p">:</span>
 <span class="g g-Whitespace">     </span><span class="mi">20</span>   <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="n">ynext</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="ne">---&gt; </span><span class="mi">21</span>   <span class="k">while</span> <span class="n">i</span><span class="o">&lt;</span><span class="nb">len</span><span class="p">(</span><span class="n">x_</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
