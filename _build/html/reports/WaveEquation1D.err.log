@@ -37,6 +37,8 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-HTML(anim.to_jshtml())
+['paramns={"legend.fontsize":5,"legend.handlength":1}', 'plt.figure(figsize=(10, 5))', '', 'ndt=110', 'plt.xlabel(r"$x$")']
+...
+['for j in range(0, nt, ndt):', '  t=j*dt', '  plt.plot(X,w[:,j])', 'plt.grid(True)', 'plt.show']
 -------------------
 
