@@ -558,14 +558,14 @@ document.write(`
 \[\begin{split} \\ r = \frac{c \Delta t}{\Delta x} \\ \end{split}\]</div>
 <p>Finite Differences:</p>
 <div class="math notranslate nohighlight">
-\[\begin{split} \\ y_{i,n+1} = 2y_{i,n}\left( 1-r^2 \right) + (y_{i+1,n} + y_{i-1,n})r^2 - y_{i,n-1} \tag{1} \\ \end{split}\]</div>
+\[\begin{split} \\ y_{i,n+1} = 2y_{i,n}\left( 1-r^2 \right) + (y_{i+1,n} + y_{i-1,n})r^2 - y_{i,n-1}  \end{split}\]</div>
 <p>Solving for <span class="math notranslate nohighlight">\(y_{i,n-1}\)</span> of velocity, substituting into Equation (1), and carrying out the algebraic development, we have:</p>
 <div class="math notranslate nohighlight">
-\[\begin{split} y_{i,n+1} = y_{i,n}\left( 1-r^2 \right) + \frac{1}{2}(y_{i+1,n} + y_{i-1,n})r^2 + v_{i,n}\Delta t \tag{2} \\ \end{split}\]</div>
+\[ y_{i,n+1} = y_{i,n}\left( 1-r^2 \right) + \frac{1}{2}(y_{i+1,n} + y_{i-1,n})r^2 + v_{i,n}\Delta t \]</div>
 <p>This last equation will be the equation to model in order to obtain the state of the string at each moment and achieve the animation for a string that does not experience friction.</p>
 <p>Now, for the string to experience friction, after performing the respective algebraic operations, we have the following function to model:</p>
 <div class="math notranslate nohighlight">
-\[\begin{split} y_{i,n+1} = y_{i,n}\left( 1-r^2 \right) + \frac{1}{2}(y_{i+1,n} + y_{i-1,n})r^2 + v_{i,n} \left( \Delta t - \frac{\theta}{2} \right) \tag{3} \\ \end{split}\]</div>
+\[ y_{i,n+1} = y_{i,n}\left( 1-r^2 \right) + \frac{1}{2}(y_{i+1,n} + y_{i-1,n})r^2 + v_{i,n} \left( \Delta t - \frac{\theta}{2} \right) \]</div>
 <p>Where <span class="math notranslate nohighlight">\(\theta = \frac{(\Delta t)^2 2k}{\rho}\)</span>, siendo <span class="math notranslate nohighlight">\(k, \rho\)</span> parameters for damping the motion as time progresses. It is worth noting that if you want to visualize the motion ignoring friction effects, simply set <span class="math notranslate nohighlight">\(\theta = 0\)</span>.
 Let’s move on to the code development, starting by importing the necessary libraries:</p>
 <div class="cell docutils container">
