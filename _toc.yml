@@ -9,3 +9,4 @@ chapters:
 - file: DoublePendulum
 - file: WaveEquation1D
 - file: WaveEquation2D
+- file: PlanetariumMotion

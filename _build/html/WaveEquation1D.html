@@ -176,6 +176,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1 current active"><a class="current reference internal" href="#"><strong>Wave Equation 1D: Centered Finite Differences</strong></a></li>
 
 <li class="toctree-l1"><a class="reference internal" href="WaveEquation2D.html"><strong>Wave Equation 2D: Finite Differences Method</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="PlanetariumMotion.html"><strong>Planetarium Motion / Kepler´s Laws</strong></a></li>
 </ul>
 
     </div>
@@ -741,71 +742,11 @@ Let’s move on to the code development, starting by importing the necessary lib
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">HTML</span><span class="p">(</span><span class="n">anim</span><span class="o">.</span><span class="n">to_jshtml</span><span class="p">())</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">12</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">HTML</span><span class="p">(</span><span class="n">anim</span><span class="o">.</span><span class="n">to_jshtml</span><span class="p">())</span>
-
-<span class="nn">File ~/anaconda3/envs/Ingenieria/lib/python3.11/site-packages/matplotlib/animation.py:1353,</span> in <span class="ni">Animation.to_jshtml</span><span class="nt">(self, fps, embed_frames, default_mode)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1349</span>         <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">tmpdir</span><span class="p">,</span> <span class="s2">&quot;temp.html&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1350</span>         <span class="n">writer</span> <span class="o">=</span> <span class="n">HTMLWriter</span><span class="p">(</span><span class="n">fps</span><span class="o">=</span><span class="n">fps</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1351</span>                             <span class="n">embed_frames</span><span class="o">=</span><span class="n">embed_frames</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1352</span>                             <span class="n">default_mode</span><span class="o">=</span><span class="n">default_mode</span><span class="p">)</span>
-<span class="ne">-&gt; </span><span class="mi">1353</span>         <span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="n">writer</span><span class="o">=</span><span class="n">writer</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1354</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_html_representation</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
-<span class="g g-Whitespace">   </span><span class="mi">1356</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_html_representation</span>
-
-<span class="nn">File ~/anaconda3/envs/Ingenieria/lib/python3.11/site-packages/matplotlib/animation.py:1105,</span> in <span class="ni">Animation.save</span><span class="nt">(self, filename, writer, fps, dpi, codec, bitrate, extra_args, metadata, extra_anim, savefig_kwargs, progress_callback)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1102</span> <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">a</span><span class="o">.</span><span class="n">new_saved_frame_seq</span><span class="p">()</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">all_anim</span><span class="p">]):</span>
-<span class="g g-Whitespace">   </span><span class="mi">1103</span>     <span class="k">for</span> <span class="n">anim</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">all_anim</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-<span class="g g-Whitespace">   </span><span class="mi">1104</span>         <span class="c1"># TODO: See if turning off blit is really necessary</span>
-<span class="ne">-&gt; </span><span class="mi">1105</span>         <span class="n">anim</span><span class="o">.</span><span class="n">_draw_next_frame</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">blit</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1106</span>         <span class="k">if</span> <span class="n">progress_callback</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1107</span>             <span class="n">progress_callback</span><span class="p">(</span><span class="n">frame_number</span><span class="p">,</span> <span class="n">total_frames</span><span class="p">)</span>
-
-<span class="nn">File ~/anaconda3/envs/Ingenieria/lib/python3.11/site-packages/matplotlib/animation.py:1140,</span> in <span class="ni">Animation._draw_next_frame</span><span class="nt">(self, framedata, blit)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1136</span> <span class="k">def</span> <span class="nf">_draw_next_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">framedata</span><span class="p">,</span> <span class="n">blit</span><span class="p">):</span>
-<span class="g g-Whitespace">   </span><span class="mi">1137</span>     <span class="c1"># Breaks down the drawing of the next frame into steps of pre- and</span>
-<span class="g g-Whitespace">   </span><span class="mi">1138</span>     <span class="c1"># post- draw, as well as the drawing of the frame itself.</span>
-<span class="g g-Whitespace">   </span><span class="mi">1139</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_pre_draw</span><span class="p">(</span><span class="n">framedata</span><span class="p">,</span> <span class="n">blit</span><span class="p">)</span>
-<span class="ne">-&gt; </span><span class="mi">1140</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_draw_frame</span><span class="p">(</span><span class="n">framedata</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1141</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_post_draw</span><span class="p">(</span><span class="n">framedata</span><span class="p">,</span> <span class="n">blit</span><span class="p">)</span>
-
-<span class="nn">File ~/anaconda3/envs/Ingenieria/lib/python3.11/site-packages/matplotlib/animation.py:1768,</span> in <span class="ni">FuncAnimation._draw_frame</span><span class="nt">(self, framedata)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1764</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_save_seq</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_save_seq</span><span class="p">[</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">_save_count</span><span class="p">:]</span>
-<span class="g g-Whitespace">   </span><span class="mi">1766</span> <span class="c1"># Call the func with framedata and args. If blitting is desired,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1767</span> <span class="c1"># func needs to return a sequence of any artists that were modified.</span>
-<span class="ne">-&gt; </span><span class="mi">1768</span> <span class="bp">self</span><span class="o">.</span><span class="n">_drawn_artists</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_func</span><span class="p">(</span><span class="n">framedata</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_args</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1770</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_blit</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1772</span>     <span class="n">err</span> <span class="o">=</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;The animation function must return a sequence &#39;</span>
-<span class="g g-Whitespace">   </span><span class="mi">1773</span>                        <span class="s1">&#39;of Artist objects.&#39;</span><span class="p">)</span>
-
-<span class="nn">Cell In[11], line 32,</span> in <span class="ni">animate</span><span class="nt">(f)</span>
-<span class="g g-Whitespace">     </span><span class="mi">30</span> <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">31</span> <span class="n">y</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="mf">3.5</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="ne">---&gt; </span><span class="mi">32</span> <span class="n">y_up</span> <span class="o">=</span> <span class="n">change</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">500</span><span class="p">),</span> <span class="n">f</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">33</span> <span class="n">line</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_up</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">34</span> <span class="k">return</span> <span class="n">line</span><span class="p">,</span>
-
-<span class="nn">Cell In[11], line 21,</span> in <span class="ni">change</span><span class="nt">(y, vy, f, x_)</span>
-<span class="g g-Whitespace">     </span><span class="mi">19</span> <span class="k">while</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="n">f</span><span class="p">:</span>
-<span class="g g-Whitespace">     </span><span class="mi">20</span>   <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="n">ynext</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="ne">---&gt; </span><span class="mi">21</span>   <span class="k">while</span> <span class="n">i</span><span class="o">&lt;</span><span class="nb">len</span><span class="p">(</span><span class="n">x_</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-<span class="g g-Whitespace">     </span><span class="mi">22</span>     <span class="n">ynext</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">r</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">r</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="n">vy</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">dt</span> <span class="o">-</span> <span class="n">theta</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">23</span>     <span class="n">i</span><span class="o">+=</span><span class="mi">1</span>
-
-<span class="ne">KeyboardInterrupt</span>: 
-</pre></div>
-</div>
-</div>
-</div>
+<p><img alt="animacion_ensayo.gif" src="attachment:1236b5c5-ea42-43c3-a4b3-8e619b128a78.gif" /></p>
+<hr class="docutils" />
+<p>We add in <strong><a class="reference external" href="https://colab.research.google.com/drive/1h6QkmLU7GdIJUSeaJReaIA5PG8Gmh6Yo">here</a></strong> a link to a Google Colab that has a bit of interface and/or interaction with the user and allows you to modify the initial values ​​of the graphs or directly play with the code. We hope you really use it because that´s the way where you would be able to use it for the specific values of your problem.</p>
+<p>The interactive animation will be embedded in the Google Colab link that we have provided in this section, as Jupyter books often encounter issues displaying any kind of animation. We hope you can understand and still enjoy the documentation</p>
+<p>Have Fun!! :)))</p>
 </section>
 </section>
 
