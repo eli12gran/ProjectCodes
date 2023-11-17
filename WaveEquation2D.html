@@ -613,12 +613,12 @@ $<span class="math notranslate nohighlight">\(u(a,y,t) = p(y,t)\)</span>$</p>
 <span class="ne">---&gt; </span><span class="mi">83</span>               <span class="n">v</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">dt</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">g</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">t</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="p">)</span>
 <span class="g g-Whitespace">     </span><span class="mi">84</span> <span class="k">return</span> <span class="n">w</span>
 
-<span class="nn">Cell In[3], line 16,</span> in <span class="ni">v</span><span class="nt">(x, y)</span>
-<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="n">dt</span> <span class="o">=</span> <span class="mf">0.0005</span>
-<span class="g g-Whitespace">     </span><span class="mi">15</span> <span class="c1"># Velocity</span>
-<span class="ne">---&gt; </span><span class="mi">16</span> <span class="k">def</span> <span class="nf">v</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
-<span class="g g-Whitespace">     </span><span class="mi">17</span>   <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mf">0.2</span><span class="p">:</span>
-<span class="g g-Whitespace">     </span><span class="mi">18</span>     <span class="k">return</span> <span class="mf">1.0</span>
+<span class="nn">Cell In[3], line 43,</span> in <span class="ni">g</span><span class="nt">(i, j, t)</span>
+<span class="g g-Whitespace">     </span><span class="mi">40</span>   <span class="k">return</span> <span class="mf">0.0</span>
+<span class="g g-Whitespace">     </span><span class="mi">42</span> <span class="c1"># Source</span>
+<span class="ne">---&gt; </span><span class="mi">43</span> <span class="k">def</span> <span class="nf">g</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+<span class="g g-Whitespace">     </span><span class="mi">44</span>   <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="p">(</span><span class="n">nx</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">==</span> <span class="p">(</span><span class="n">ny</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+<span class="g g-Whitespace">     </span><span class="mi">45</span>     <span class="n">f</span> <span class="o">=</span> <span class="mf">30.0</span> <span class="c1">#Hz</span>
 
 <span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
