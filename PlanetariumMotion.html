@@ -1,0 +1,735 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Planetarium Motion / Kepler´s Laws &#8212; Physics 3D Animation Project</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'PlanetariumMotion';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Wave Equation 2D: Finite Differences Method" href="WaveEquation2D.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logoUdeM.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/logoUdeM.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Welcome to Physics 3D Animations Documentation!
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="PendulumNew.html"><strong>Pendulum With Drag</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="ExternForcePendulum.html"><strong>Analytic Solution Pendulum with Extern Force and Drag</strong></a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="DoublePendulum.html"><strong>Double Pendulum</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="WaveEquation1D.html"><strong>Wave Equation 1D: Centered Finite Differences</strong></a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="WaveEquation2D.html"><strong>Wave Equation 2D: Finite Differences Method</strong></a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"><strong>Planetarium Motion / Kepler´s Laws</strong></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FPlanetariumMotion.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/PlanetariumMotion.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Planetarium Motion / Kepler´s Laws</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#runge-kutta-4th-order"><strong>Runge Kutta 4th Order</strong>:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rotation-period-of-each-planet"><strong>Rotation Period of Each Planet</strong></a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="planetarium-motion-kepler-s-laws">
+<h1><strong>Planetarium Motion / Kepler´s Laws</strong><a class="headerlink" href="#planetarium-motion-kepler-s-laws" title="Permalink to this heading">#</a></h1>
+<p>The central idea of this motion is to study the movement of a planet under the gravitational force of the sun. Let’s look at the following image for a better understanding.</p>
+<p>Where <span class="math notranslate nohighlight">\(F_{G}\)</span> is the universal gravitational force and is given by:</p>
+<div class="math notranslate nohighlight">
+\[F_{G} = \frac{GM_{s}m}{r^2}\]</div>
+<p>Where <span class="math notranslate nohighlight">\(M_{s}\)</span> is the mass of the sun, and <span class="math notranslate nohighlight">\(m\)</span> is the mass of the planet. If we express this in vector notation:</p>
+<div class="math notranslate nohighlight">
+\[\vec {F}_{G} = - \frac {GM_{s}m}{r^2} \hat{r}\]</div>
+<p>Remember that <span class="math notranslate nohighlight">\(\hat{r} = \frac {\vec{r}}{r}\)</span>. Then:</p>
+<div class="math notranslate nohighlight">
+\[\vec{F_{G}} = - \frac {GM_{s}m}{r^2} \frac {\vec{r}}{r}\]</div>
+<p>Now, we apply Newton’s second law to this system to find the acceleration and velocity of the planet. This is:</p>
+<div class="math notranslate nohighlight">
+\[- \frac {GM_{s}m}{r^3} \vec{r} = m \vec{a_{m}}\]</div>
+<p>The equations that would then describe the acceleration (<span class="math notranslate nohighlight">\((1)\)</span>, <span class="math notranslate nohighlight">\((2)\)</span>) and velocity (<span class="math notranslate nohighlight">\((3)\)</span>, <span class="math notranslate nohighlight">\((4)\)</span>):</p>
+<div class="math notranslate nohighlight">
+\[\frac {d v_{x}}{dt} = \frac{-GM_{s}}{r^3} x\]</div>
+<div class="math notranslate nohighlight">
+\[\frac {d v_{y}}{dt} = \frac{-GM_{s}}{r^3} y\]</div>
+<div class="math notranslate nohighlight">
+\[\frac {dx}{dt} = v_{x}\]</div>
+<div class="math notranslate nohighlight">
+\[\frac {dy}{dt} = v_{y}\]</div>
+<p>If we transform equations 1 and 2 into Cartesian coordinates:</p>
+<div class="math notranslate nohighlight">
+\[\frac {-GM_{s}} {(x^2+y^2)^{3/2}}x\]</div>
+<div class="math notranslate nohighlight">
+\[\frac {-GM_{s}} {(x^2+y^2)^{3/2}}y\]</div>
+<p>These will then be the equations we solve for our planetary system. Before writing the code, it is crucial to clarify the topic of units that will be used for this, as we must be consistent in the units of distances and time. We will use:</p>
+<ul class="simple">
+<li><p><strong>Time</strong>: Earth years</p></li>
+<li><p><strong>Distance</strong>: Astronomical Units</p></li>
+<li><p><strong>Mass of the sun</strong> <span class="math notranslate nohighlight">\(M_{s}\)</span> (Kg) = <span class="math notranslate nohighlight">\(2 \times 10^{30} Kg\)</span></p></li>
+</ul>
+<p>Standard gravitational parameter(U.A)= <span class="math notranslate nohighlight">\(G \times M_{s} = 39.3926 \frac {UA^{3}}{Yr^{2}}\)</span></p>
+<p>Now, the initial conditions of our planetary system will depend on the aphelion of each planet to the sun. It is essential to remember that aphelion is defined as the farthest distance to the sun, but since we are treating our system as if it were a circle, the distance from the sun to the perihelion and the sun to the aphelion is approximately the same. We will use only the aphelion as the initial condition.</p>
+<p>The initial conditions would then be given by:</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(x_{0}\)</span>: Aphelion of each planet</p></li>
+<li><p><span class="math notranslate nohighlight">\(y_{0}\)</span>: 0 for all</p></li>
+<li><p><span class="math notranslate nohighlight">\(vel_{x_{0}}\)</span>: 0 for all</p></li>
+<li><p><span class="math notranslate nohighlight">\(vel_{y_{0}}\)</span>: Velocity at the aphelion</p></li>
+</ol>
+<p>The velocity is calculated with:</p>
+<div class="math notranslate nohighlight">
+\[v = \sqrt{\mu \frac{1}{r}}\]</div>
+<p>Where <span class="math notranslate nohighlight">\(r\)</span> is the distance from the aphelion of each planet to the sun in U.A., and <span class="math notranslate nohighlight">\(\mu\)</span> is the standard gravitational parameter described earlier.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Euler-Cromer Method</span>
+<span class="k">def</span> <span class="nf">calculatePlanetOrbit</span><span class="p">(</span><span class="n">initial_position</span><span class="p">,</span> <span class="n">initial_velocity</span><span class="p">,</span> <span class="n">time</span><span class="p">):</span>
+    <span class="n">velx</span><span class="p">,</span> <span class="n">vely</span> <span class="o">=</span> <span class="n">initial_velocity</span>
+    <span class="n">posx</span><span class="p">,</span> <span class="n">posy</span> <span class="o">=</span> <span class="n">initial_position</span>
+    <span class="n">pos_x</span> <span class="o">=</span> <span class="p">[</span><span class="n">posx</span><span class="p">]</span>
+    <span class="n">pos_y</span> <span class="o">=</span> <span class="p">[</span><span class="n">posy</span><span class="p">]</span>
+    <span class="n">vel_x</span> <span class="o">=</span> <span class="p">[</span><span class="n">velx</span><span class="p">]</span>
+    <span class="n">vel_y</span> <span class="o">=</span> <span class="p">[</span><span class="n">vely</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">time</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">r2</span> <span class="o">=</span> <span class="n">posx</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">posy</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="n">vel_x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">velx</span> <span class="o">+</span> <span class="o">-</span><span class="p">((</span><span class="n">miu</span> <span class="o">*</span> <span class="n">posx</span><span class="p">)</span> <span class="o">/</span> <span class="n">r2</span> <span class="o">**</span> <span class="mf">1.5</span><span class="p">)</span> <span class="o">*</span> <span class="n">time</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">vel_y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vely</span> <span class="o">+</span> <span class="o">-</span><span class="p">((</span><span class="n">miu</span> <span class="o">*</span> <span class="n">posy</span><span class="p">)</span> <span class="o">/</span> <span class="n">r2</span> <span class="o">**</span> <span class="mf">1.5</span><span class="p">)</span> <span class="o">*</span> <span class="n">time</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="n">pos_x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">posx</span> <span class="o">+</span> <span class="n">vel_x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">time</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">pos_y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">posy</span> <span class="o">+</span> <span class="n">vel_y</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">time</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="n">posx</span><span class="p">,</span> <span class="n">posy</span> <span class="o">=</span> <span class="n">pos_x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">pos_y</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">velx</span><span class="p">,</span> <span class="n">vely</span> <span class="o">=</span> <span class="n">vel_x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">vel_y</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">pos_x</span><span class="p">,</span> <span class="n">pos_y</span><span class="p">,</span> <span class="n">vel_x</span><span class="p">,</span> <span class="n">vel_y</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">aphelion</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.47</span><span class="p">,</span> <span class="mf">0.73</span><span class="p">,</span> <span class="mf">1.02</span><span class="p">,</span> <span class="mf">1.67</span><span class="p">,</span> <span class="mf">5.45</span><span class="p">,</span> <span class="mf">10.07</span><span class="p">,</span> <span class="mf">20.09</span><span class="p">,</span> <span class="mf">30.32</span><span class="p">]</span>
+<span class="n">miu</span> <span class="o">=</span> <span class="mf">39.3926</span>
+<span class="n">velocities</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">aphelion</span><span class="p">:</span>
+  <span class="n">velocities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">miu</span> <span class="o">*</span> <span class="mi">1</span><span class="o">/</span><span class="n">i</span><span class="p">))</span>
+
+<span class="n">planetsNames</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Mercury&#39;</span><span class="p">,</span> <span class="s1">&#39;Venus&#39;</span><span class="p">,</span> <span class="s1">&#39;Earth&#39;</span><span class="p">,</span> <span class="s1">&#39;Mars&#39;</span><span class="p">,</span> <span class="s1">&#39;Jupiter&#39;</span><span class="p">,</span> <span class="s1">&#39;Saturn&#39;</span><span class="p">,</span> <span class="s1">&#39;Uranus&#39;</span><span class="p">,</span> <span class="s1">&#39;Neptune&#39;</span><span class="p">]</span>
+
+<span class="c1"># 168 years</span>
+<span class="n">time10</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">10000</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">aphelion</span><span class="p">)):</span>
+    <span class="n">pos_x</span><span class="p">,</span> <span class="n">pos_y</span><span class="p">,</span> <span class="n">vel_x</span><span class="p">,</span> <span class="n">vel_y</span> <span class="o">=</span> <span class="n">calculatePlanetOrbit</span><span class="p">([</span><span class="n">aphelion</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">velocities</span><span class="p">[</span><span class="n">i</span><span class="p">]],</span> <span class="n">time10</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">pos_x</span><span class="p">,</span> <span class="n">pos_y</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">planetsNames</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Planets Orbits&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;X Position (AU)&#39;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Y Position (AU)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;best&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="s2">&quot;---&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/47c9f5154f38d26f4dabb86245e5fd0dcf78710ed0ab902109ada02b6182d291.png" src="_images/47c9f5154f38d26f4dabb86245e5fd0dcf78710ed0ab902109ada02b6182d291.png" />
+</div>
+</div>
+<section id="runge-kutta-4th-order">
+<h2><strong>Runge Kutta 4th Order</strong>:<a class="headerlink" href="#runge-kutta-4th-order" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">RK4Planets</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">vx</span><span class="p">,</span> <span class="n">vy</span><span class="p">,</span> <span class="n">h</span><span class="p">):</span>
+  <span class="n">miu</span> <span class="o">=</span> <span class="mf">39.3926</span>
+  <span class="n">fvx</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="o">-</span><span class="n">miu</span><span class="o">*</span><span class="n">x</span><span class="o">/</span><span class="p">((</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mi">3</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span>
+  <span class="n">fvy</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="o">-</span><span class="n">miu</span><span class="o">*</span><span class="n">y</span><span class="o">/</span><span class="p">((</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mi">3</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span>
+  <span class="n">i</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">167.5</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+  <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">time</span><span class="p">):</span>
+    <span class="n">k1</span> <span class="o">=</span> <span class="n">h</span><span class="o">*</span><span class="n">vx</span><span class="p">[</span><span class="n">i</span><span class="p">];</span> <span class="n">q1</span> <span class="o">=</span> <span class="n">h</span><span class="o">*</span><span class="n">vy</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">l1</span> <span class="o">=</span> <span class="n">h</span><span class="o">*</span><span class="n">fvx</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span> <span class="n">m1</span> <span class="o">=</span> <span class="n">h</span><span class="o">*</span><span class="n">fvy</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+    <span class="n">k2</span> <span class="o">=</span> <span class="n">h</span><span class="o">*</span><span class="p">(</span><span class="n">vx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">h</span><span class="o">/</span><span class="mi">2</span><span class="p">);</span> <span class="n">q2</span> <span class="o">=</span> <span class="n">h</span><span class="o">*</span><span class="p">(</span><span class="n">vy</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">h</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">l2</span> <span class="o">=</span> <span class="n">h</span><span class="o">*</span><span class="n">fvx</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">k1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">q1</span><span class="o">/</span><span class="mi">2</span><span class="p">);</span> <span class="n">m2</span> <span class="o">=</span> <span class="n">h</span><span class="o">*</span><span class="n">fvy</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">k1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">q1</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="n">k3</span> <span class="o">=</span> <span class="n">h</span><span class="o">*</span><span class="p">(</span><span class="n">vx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">h</span><span class="o">/</span><span class="mi">2</span><span class="p">);</span> <span class="n">q3</span> <span class="o">=</span> <span class="n">h</span><span class="o">*</span><span class="p">(</span><span class="n">vy</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">h</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">l3</span> <span class="o">=</span> <span class="n">h</span><span class="o">*</span><span class="n">fvx</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">k2</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">q2</span><span class="o">/</span><span class="mi">2</span><span class="p">);</span> <span class="n">m3</span> <span class="o">=</span> <span class="n">h</span><span class="o">*</span><span class="n">fvy</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">k2</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">q2</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="n">k4</span> <span class="o">=</span> <span class="n">h</span><span class="o">*</span><span class="p">(</span><span class="n">vx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">l3</span><span class="p">);</span> <span class="n">q4</span> <span class="o">=</span> <span class="n">h</span><span class="o">*</span><span class="p">(</span><span class="n">vy</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">m3</span><span class="p">)</span>
+    <span class="n">l4</span> <span class="o">=</span> <span class="n">h</span><span class="o">*</span><span class="n">fvx</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">k3</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">q3</span><span class="p">);</span> <span class="n">m4</span> <span class="o">=</span> <span class="n">h</span><span class="o">*</span><span class="n">fvy</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">k3</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">q3</span><span class="p">)</span>
+
+    <span class="n">x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">k1</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">k2</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">k3</span> <span class="o">+</span> <span class="n">k4</span><span class="p">)</span> <span class="p">)</span>
+    <span class="n">y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">q1</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">q2</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">q3</span> <span class="o">+</span> <span class="n">q4</span><span class="p">)</span> <span class="p">)</span>
+    <span class="n">vx</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">vx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">l1</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">l2</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">l3</span> <span class="o">+</span> <span class="n">l4</span><span class="p">)</span> <span class="p">)</span>
+    <span class="n">vy</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">vy</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">m1</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">m2</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">m3</span> <span class="o">+</span> <span class="n">m4</span><span class="p">)</span> <span class="p">)</span>
+    <span class="n">i</span><span class="o">+=</span><span class="mi">1</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Planets Orbits&quot;</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;X Position (AU)&#39;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Y Position (AU)&#39;</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="s2">&quot;---&quot;</span><span class="p">)</span>
+  <span class="n">x_ini</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="n">x_fin</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+  <span class="k">return</span> <span class="n">x_ini</span><span class="p">,</span> <span class="n">x_fin</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">mercurio</span> <span class="o">=</span> <span class="n">RK4Planets</span><span class="p">([</span><span class="mf">0.47</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="n">velocities</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="mf">0.001</span><span class="p">)</span>
+<span class="n">venus</span> <span class="o">=</span> <span class="n">RK4Planets</span><span class="p">([</span><span class="mf">0.73</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="n">velocities</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="mf">0.001</span><span class="p">)</span>
+<span class="n">tierra</span> <span class="o">=</span> <span class="n">RK4Planets</span><span class="p">([</span><span class="mf">1.02</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="n">velocities</span><span class="p">[</span><span class="mi">2</span><span class="p">]],</span> <span class="mf">0.001</span><span class="p">)</span>
+<span class="n">marte</span> <span class="o">=</span> <span class="n">RK4Planets</span><span class="p">([</span><span class="mf">1.67</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="n">velocities</span><span class="p">[</span><span class="mi">3</span><span class="p">]],</span> <span class="mf">0.001</span><span class="p">)</span>
+<span class="n">jupiter</span> <span class="o">=</span> <span class="n">RK4Planets</span><span class="p">([</span><span class="mf">5.45</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="n">velocities</span><span class="p">[</span><span class="mi">4</span><span class="p">]],</span> <span class="mf">0.001</span><span class="p">)</span>
+<span class="n">saturno</span> <span class="o">=</span> <span class="n">RK4Planets</span><span class="p">([</span><span class="mf">10.07</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="n">velocities</span><span class="p">[</span><span class="mi">5</span><span class="p">]],</span> <span class="mf">0.001</span><span class="p">)</span>
+<span class="n">urano</span> <span class="o">=</span> <span class="n">RK4Planets</span><span class="p">([</span><span class="mf">20.09</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="n">velocities</span><span class="p">[</span><span class="mi">6</span><span class="p">]],</span> <span class="mf">0.001</span><span class="p">)</span>
+<span class="n">neptuno</span> <span class="o">=</span> <span class="n">RK4Planets</span><span class="p">([</span><span class="mf">30.32</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="n">velocities</span><span class="p">[</span><span class="mi">7</span><span class="p">]],</span> <span class="mf">0.001</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/326e841b8c71d58600b0c92139d33925dc253e5ffd5749dcd5f63755590ea2b6.png" src="_images/326e841b8c71d58600b0c92139d33925dc253e5ffd5749dcd5f63755590ea2b6.png" />
+</div>
+</div>
+</section>
+<section id="rotation-period-of-each-planet">
+<h2><strong>Rotation Period of Each Planet</strong><a class="headerlink" href="#rotation-period-of-each-planet" title="Permalink to this heading">#</a></h2>
+<p>For this task, we were asked to create a graph of <span class="math notranslate nohighlight">\(T^2\)</span> vs <span class="math notranslate nohighlight">\(a^3\)</span>, where <span class="math notranslate nohighlight">\(T^2\)</span> is the period of the planet, and <span class="math notranslate nohighlight">\(a^3\)</span> is given by:</p>
+<div class="math notranslate nohighlight">
+\[a^3 = (\frac{aphelion - perihelion}{2})^{3}\]</div>
+<p>An attempt was made to create a function that could determine the orbital period of each planet using the positions of each planet. The function did not work correctly because the orbital periods were significantly different. For instance, while one planet completed an orbit in just one year, another took 168 years. This discrepancy made it challenging to develop a code that could calculate the orbits of all planets and simultaneously determine the orbital period of each.</p>
+<p>To implement the orbital period function, it would be necessary to take each planet, calculate its orbit over a time not too distant from its known data, allowing the planet to complete a full revolution without overshooting (with some tolerance), and then observe the time taken.</p>
+<p>Since I was unable to create this function, I used the known experimental data of the planets to display the orbital period. It’s important to note that the formula states that the numerator of <span class="math notranslate nohighlight">\(a^{3}\)</span> is the aphelion of the planet minus its perihelion. Since the data values are very similar and none of them have the same significant figures as the other, subtracting them did not yield the most appropriate result. Therefore, in the formula, I only used the aphelion of the planet, i.e., without subtracting the perihelion.</p>
+<p>For a better illustration, let’s take a look at the code:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">perihelion</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.31</span><span class="p">,</span> <span class="mf">0.72</span><span class="p">,</span> <span class="mf">0.98</span><span class="p">,</span> <span class="mf">1.38</span><span class="p">,</span> <span class="mf">4.95</span><span class="p">,</span> <span class="mf">9.01</span><span class="p">,</span> <span class="mf">18.28</span><span class="p">,</span> <span class="mf">29.80</span><span class="p">]</span>
+<span class="n">orbit_period</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.241096</span><span class="p">,</span> <span class="mf">0.616438</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.88219</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">84</span><span class="p">,</span> <span class="mi">165</span><span class="p">]</span>
+<span class="n">planetsNames</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Mercury&#39;</span><span class="p">,</span> <span class="s1">&#39;Venus&#39;</span><span class="p">,</span> <span class="s1">&#39;Earth&#39;</span><span class="p">,</span> <span class="s1">&#39;Mars&#39;</span><span class="p">,</span> <span class="s1">&#39;Jupiter&#39;</span><span class="p">,</span> <span class="s1">&#39;Saturn&#39;</span><span class="p">,</span> <span class="s1">&#39;Uranus&#39;</span><span class="p">,</span> <span class="s1">&#39;Neptune&#39;</span><span class="p">]</span>
+
+<span class="n">a3</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">):</span>
+  <span class="n">a3</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="p">(</span> <span class="p">(</span><span class="n">aphelion</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">orbi2</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">orbit_period</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">orbi2</span><span class="p">,</span> <span class="n">a3</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">planet</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">planetsNames</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">planet</span><span class="p">,</span> <span class="p">(</span><span class="n">orbi2</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">a3</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="n">textcoords</span><span class="o">=</span><span class="s2">&quot;offset points&quot;</span><span class="p">,</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">orbi2</span><span class="p">,</span> <span class="n">a3</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="s2">&quot;--&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;T^2&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;a^3&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Third Kepler´s Law&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Third Kepler´s Law&#39;)
+</pre></div>
+</div>
+<img alt="_images/72b877787f2f1367ba4ba650ca52a772e9a34ef3206f4fd1233c9a78ed48fb10.png" src="_images/72b877787f2f1367ba4ba650ca52a772e9a34ef3206f4fd1233c9a78ed48fb10.png" />
+</div>
+</div>
+<p>And if we were to use the complete formula, that is, aphelion minus perihelion, this would be:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a4</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">):</span>
+  <span class="n">a4</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="p">(</span> <span class="p">(</span><span class="n">aphelion</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">perihelion</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">orbi2</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">orbit_period</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">orbi2</span><span class="p">,</span> <span class="n">a4</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">planet</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">planetsNames</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">planet</span><span class="p">,</span> <span class="p">(</span><span class="n">orbi2</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">a4</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="n">textcoords</span><span class="o">=</span><span class="s2">&quot;offset points&quot;</span><span class="p">,</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">orbi2</span><span class="p">,</span> <span class="n">a4</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="s2">&quot;--&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;T^2&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;a^3&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Third Kepler´s Law&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Third Kepler´s Law&#39;)
+</pre></div>
+</div>
+<img alt="_images/ca9d4b23bc4d022c148d9dc74210a712b6e7f033fca8fac6f17c8e236e458c9b.png" src="_images/ca9d4b23bc4d022c148d9dc74210a712b6e7f033fca8fac6f17c8e236e458c9b.png" />
+</div>
+</div>
+<hr class="docutils" />
+<p>For this animation, we didn’t use GlowScript or the HTML functions of Matplotlib, as we did in previous codes; instead, we used the Blender design program. The GIF that will be loaded below is entirely in Blender code. When creating 3D animations of physical phenomena in applications like Blender, which are not specifically designed for physics simulations, it is challenging to ensure that real planetary data (in this specific case) would accurately represent the behavior. Therefore, for the simulation, we manipulated the velocity and force data of the planets. The code is included in this section in the form of images. This is:</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="WaveEquation2D.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><strong>Wave Equation 2D: Finite Differences Method</strong></p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#runge-kutta-4th-order"><strong>Runge Kutta 4th Order</strong>:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rotation-period-of-each-planet"><strong>Rotation Period of Each Planet</strong></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
